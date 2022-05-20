@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "GamingTournamentPlatform.Backend": {
+    "GamingTournamentPlatform.Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

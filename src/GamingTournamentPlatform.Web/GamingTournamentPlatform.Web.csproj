@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GamingTournamentPlatform.Application\GamingTournamentPlatform.Application.csproj" />
+    <ProjectReference Include="..\GamingTournamentPlatform.Infrastructure\GamingTournamentPlatform.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

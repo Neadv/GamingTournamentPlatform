@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6D2F3749-564F-44B7-A08F-0E3222F6965F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2617300F-865B-41B8-9414-A0186E0D57F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingTournamentPlatform.Backend", "src\GamingTournamentPlatform.Backend\GamingTournamentPlatform.Backend.csproj", "{D95D9083-8BBE-4370-81A4-FA47E42F0DF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingTournamentPlatform.Application", "src\GamingTournamentPlatform.Application\GamingTournamentPlatform.Application.csproj", "{55E00E7E-1613-41FF-A277-B2C713D50C7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingTournamentPlatform.Domain", "src\GamingTournamentPlatform.Domain\GamingTournamentPlatform.Domain.csproj", "{8B93BF55-A17A-4530-A5BD-07ACD19219DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingTournamentPlatform.Infrastructure", "src\GamingTournamentPlatform.Infrastructure\GamingTournamentPlatform.Infrastructure.csproj", "{53EE6035-012C-4C7A-89CC-A527F772DB74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingTournamentPlatform.Web", "src\GamingTournamentPlatform.Web\GamingTournamentPlatform.Web.csproj", "{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,12 +22,27 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D95D9083-8BBE-4370-81A4-FA47E42F0DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D95D9083-8BBE-4370-81A4-FA47E42F0DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D95D9083-8BBE-4370-81A4-FA47E42F0DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D95D9083-8BBE-4370-81A4-FA47E42F0DF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E00E7E-1613-41FF-A277-B2C713D50C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E00E7E-1613-41FF-A277-B2C713D50C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E00E7E-1613-41FF-A277-B2C713D50C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E00E7E-1613-41FF-A277-B2C713D50C7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B93BF55-A17A-4530-A5BD-07ACD19219DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B93BF55-A17A-4530-A5BD-07ACD19219DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B93BF55-A17A-4530-A5BD-07ACD19219DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B93BF55-A17A-4530-A5BD-07ACD19219DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53EE6035-012C-4C7A-89CC-A527F772DB74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53EE6035-012C-4C7A-89CC-A527F772DB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53EE6035-012C-4C7A-89CC-A527F772DB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53EE6035-012C-4C7A-89CC-A527F772DB74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D95D9083-8BBE-4370-81A4-FA47E42F0DF8} = {6D2F3749-564F-44B7-A08F-0E3222F6965F}
+		{55E00E7E-1613-41FF-A277-B2C713D50C7A} = {2617300F-865B-41B8-9414-A0186E0D57F7}
+		{8B93BF55-A17A-4530-A5BD-07ACD19219DB} = {2617300F-865B-41B8-9414-A0186E0D57F7}
+		{53EE6035-012C-4C7A-89CC-A527F772DB74} = {2617300F-865B-41B8-9414-A0186E0D57F7}
+		{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7} = {2617300F-865B-41B8-9414-A0186E0D57F7}
 	EndGlobalSection
 EndGlobal
