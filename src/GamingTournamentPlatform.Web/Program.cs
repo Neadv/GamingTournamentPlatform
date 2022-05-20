@@ -12,11 +12,11 @@ builder.Services.AddSpaStaticFiles(configuration =>
     configuration.RootPath = builder.Configuration.GetValue<string>("ClientAppSourcePath");
 });
 
-builder.Services.AddServices();
-builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
+builder.Services.AddServices();
 
-builder.Services.AddSwaggerGen();
+builder.AddApplicationAuthentication();
 
 var app = builder.Build();
 
@@ -34,6 +34,9 @@ else
 
 app.UseRouting();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
@@ -48,5 +51,6 @@ app.UseSpa(spa =>
     }
 });
 
+app.SeedDatabase();
 
 app.Run();

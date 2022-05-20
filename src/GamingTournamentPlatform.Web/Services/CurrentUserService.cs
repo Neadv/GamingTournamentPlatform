@@ -22,5 +22,12 @@ namespace GamingTournamentPlatform.Web.Services
                 return null;
             }
         }
+
+        public bool IsAuthorized => UserId != null;
+
+        public bool IsInRole(string roleName)
+        {
+            return _httpContextAccessor.HttpContext?.User.IsInRole(roleName) ?? false;
+        }
     }
 }

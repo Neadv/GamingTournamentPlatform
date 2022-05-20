@@ -1,5 +1,7 @@
-﻿using GamingTournamentPlatform.Infrastructure.Data;
+﻿using GamingTournamentPlatform.Application.Common.Interfaces;
+using GamingTournamentPlatform.Infrastructure.Data;
 using GamingTournamentPlatform.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +17,9 @@ namespace GamingTournamentPlatform.Infrastructure
             services.AddDbContext<ApplicationIdentityDbContext>(opts => opts.UseSqlServer(connectionString, b => b.MigrationsAssembly(typeof(ApplicationIdentityDbContext).Assembly.FullName)));
             services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(connectionString, b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-            services.AddIdentityCore<ApplicationUser>(opts =>
+            services.AddScoped<IApplicationDbContext>(s => s.GetRequiredService<ApplicationDbContext>());
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>(opts =>
             {
                 // TODO: Get from appsettings
                 opts.Password.RequireUppercase = false;
@@ -24,8 +28,10 @@ namespace GamingTournamentPlatform.Infrastructure
                 opts.Password.RequiredLength = 6;
                 opts.Password.RequireDigit = true;
             })
-                .AddRoles<ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationIdentityDbContext>();
+                .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddTransient<IIdentityService, IdentityService>();
 
             return services;
         }

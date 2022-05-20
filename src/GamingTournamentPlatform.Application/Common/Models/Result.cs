@@ -2,18 +2,23 @@
 {
     public class Result
     {
-        public Result(IEnumerable<string> errors)
+        public Result(IDictionary<string, string[]> errors)
         {
-            Errors = errors.ToArray();
+            Errors = errors;
         }
 
-        public bool Succeeded => Errors.Length == 0;
+        public Result()
+        {
+            Errors = new Dictionary<string, string[]>();
+        }
 
-        public string[] Errors { get; set; }
+        public bool Succeeded => Errors.Count == 0;
+
+        public IDictionary<string, string[]> Errors { get; set; }
 
         public static Result Success()
         {
-            return new Result(Array.Empty<string>());
+            return new Result();
         }
     }
 }

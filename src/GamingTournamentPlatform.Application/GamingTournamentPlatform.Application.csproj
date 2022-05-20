@@ -11,6 +11,10 @@
     <ProjectReference Include="..\GamingTournamentPlatform.Domain\GamingTournamentPlatform.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Mappings\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
