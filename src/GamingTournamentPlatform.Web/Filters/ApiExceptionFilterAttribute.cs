@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GamingTournamentPlatform.Application.Common.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace GamingTournamentPlatform.Web.Filters
@@ -12,7 +13,11 @@ namespace GamingTournamentPlatform.Web.Filters
             // Register known exception types and handlers.
             _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
             {
-
+                { typeof(ValidationException), HandleValidationException },
+                { typeof(NotFoundException), HandleNotFoundException },
+                { typeof(UnauthorizedAccessException), HandleAuthorizationException },
+                { typeof(AuthorizationException), HandleAuthorizationException },
+                { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
             };
         }
 
@@ -61,6 +66,65 @@ namespace GamingTournamentPlatform.Web.Filters
             context.Result = new ObjectResult(details)
             {
                 StatusCode = StatusCodes.Status500InternalServerError
+            };
+
+            context.ExceptionHandled = true;
+        }
+
+        private void HandleValidationException(ExceptionContext context)
+        {
+            var exception = (ValidationException)context.Exception;
+
+            var details = new ValidationProblemDetails(exception.Errors);
+
+            context.Result = new BadRequestObjectResult(details);
+
+            context.ExceptionHandled = true;
+        }
+
+        private void HandleNotFoundException(ExceptionContext context)
+        {
+            var exception = (NotFoundException)context.Exception;
+
+            var details = new ProblemDetails()
+            {
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                Title = "The specified resource was not found.",
+                Detail = exception.Message
+            };
+
+            context.Result = new NotFoundObjectResult(details);
+
+            context.ExceptionHandled = true;
+        }
+
+        private void HandleAuthorizationException(ExceptionContext context)
+        {
+            var details = new ProblemDetails
+            {
+                Status = StatusCodes.Status401Unauthorized,
+                Title = "Unauthorized"
+            };
+
+            context.Result = new ObjectResult(details)
+            {
+                StatusCode = StatusCodes.Status401Unauthorized
+            };
+
+            context.ExceptionHandled = true;
+        }
+
+        private void HandleForbiddenAccessException(ExceptionContext context)
+        {
+            var details = new ProblemDetails
+            {
+                Status = StatusCodes.Status403Forbidden,
+                Title = "Forbidden"
+            };
+
+            context.Result = new ObjectResult(details)
+            {
+                StatusCode = StatusCodes.Status403Forbidden
             };
 
             context.ExceptionHandled = true;

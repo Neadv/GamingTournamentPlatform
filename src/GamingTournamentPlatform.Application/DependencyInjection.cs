@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using GamingTournamentPlatform.Application.Common.Behaviors;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GamingTournamentPlatform.Application
 {
@@ -6,6 +9,11 @@ namespace GamingTournamentPlatform.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(DependencyInjection).Assembly);
+            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+            services.AddMediatR(typeof(DependencyInjection).Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
             return services;
         }
     }
