@@ -1,5 +1,8 @@
 ﻿using FluentValidation;
 using GamingTournamentPlatform.Application.Common.Behaviors;
+using GamingTournamentPlatform.Application.Common.Interfaces;
+using GamingTournamentPlatform.Domain.Entities;
+
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 

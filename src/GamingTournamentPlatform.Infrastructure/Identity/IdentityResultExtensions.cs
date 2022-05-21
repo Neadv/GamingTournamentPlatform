@@ -9,7 +9,7 @@ namespace GamingTournamentPlatform.Infrastructure.Identity
         {
             return result.Succeeded
                 ? Result.Success()
-                : new Result(result.Errors.GroupBy(e => e.Code, e => e.Description).ToDictionary(e => e.Key, e => e.ToArray()));
+                : new Result(result.Errors.GroupBy(e => e.Code, e => e.Description).ToDictionary(e => e.Key, e => e.ToList()));
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using FluentValidation.Results;
 
+using GamingTournamentPlatform.Application.Common.Models;
+
 namespace GamingTournamentPlatform.Application.Common.Exceptions
 {
     public class ValidationException : Exception
@@ -13,6 +15,11 @@ namespace GamingTournamentPlatform.Application.Common.Exceptions
         public ValidationException(IDictionary<string, string[]> errors)
         {
             Errors = errors;
+        }
+
+        public ValidationException(Result result)
+        {
+            Errors = result.Errors.ToDictionary(k => k.Key, v => v.Value.ToArray());
         }
 
         public ValidationException(IEnumerable<ValidationFailure> failures)

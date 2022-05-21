@@ -18,7 +18,7 @@ namespace GamingTournamentPlatform.Application.Authorization.Commands.Register
             var result = await _identityService.CreateUserAsync(request.UserName, request.Email, request.Password);
 
             if (!result.Succeeded)
-                throw new ValidationException(result.Errors);
+                throw new ValidationException(result);
 
             return Unit.Value;
         }

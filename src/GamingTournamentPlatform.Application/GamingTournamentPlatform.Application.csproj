@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Mappings\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <PropertyGroup>

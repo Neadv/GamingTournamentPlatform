@@ -10,6 +10,9 @@ namespace GamingTournamentPlatform.Infrastructure.Data
         private readonly ICurrentUserService _currentUserService;
 
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<TournamentCategory> TournamentCategories { get; set; } = null!;
+        public DbSet<Team> Teams { get; set; } = null!;
+        public DbSet<TeamUserApplication> TeamUserApplications { get; set; } = null!;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserService currentUserService)
             : base(options)
