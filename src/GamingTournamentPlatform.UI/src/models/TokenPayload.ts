@@ -7,5 +7,5 @@ export interface TokenPayload {
     iat: number;
     iss: string;
     aud: string;
-    role: string | string[];
+    role?: string | string[];
 }

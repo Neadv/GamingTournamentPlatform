@@ -1,10 +1,11 @@
+import { Token } from "../models/Token";
 import { TokenPayload } from "../models/TokenPayload";
 import { User } from "../models/User";
 import tokenService from "./tokenService";
 
 class userService {
-    public getUserFromToken() {
-        const tokenPayload = tokenService.getTokenPayload();
+    public getUserFromToken(token: Token) {
+        const tokenPayload = tokenService.getTokenPayload(token.accessToken);
         if (tokenPayload) {
             return this.getUserFromPayload(tokenPayload);
         }
@@ -12,10 +13,10 @@ class userService {
     }
 
     private getUserFromPayload(payload: TokenPayload): User {
-        let roles: string[];
+        let roles: string[] = [];
         if (Array.isArray(payload.role)) {
             roles = [...payload.role];
-        } else {
+        } else if (payload.role) {
             roles = [payload.role];
         }
 

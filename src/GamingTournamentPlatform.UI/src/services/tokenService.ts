@@ -13,11 +13,13 @@ class TokenService {
         return localStorageService.get<Token>(this.tokenKey);
     }
 
-    public getTokenPayload() {
-        if (localStorageService.existKey(this.tokenKey)) {
+    public getTokenPayload(token?: string) {
+        if (!token) {
+            token = this.getToken()?.accessToken;
+        }
+        if (token) {
             try {
-                const token = this.getToken() as Token;
-                const base64 = token.accessToken.split(".")[1];
+                const base64 = token.split(".")[1];
                 const json = atob(base64);
                 const payload: TokenPayload = JSON.parse(json);
                 return payload;
@@ -26,6 +28,10 @@ class TokenService {
             }
         }
         return null;
+    }
+
+    public removeToken() {
+        localStorageService.remove(this.tokenKey);
     }
 }
 

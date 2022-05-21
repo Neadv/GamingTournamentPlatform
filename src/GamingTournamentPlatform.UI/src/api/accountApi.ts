@@ -1,7 +1,10 @@
 import api from ".";
+import { Token } from "../models/Token";
 
-function login(username: string, password: string): Promise<void> {
-    return api.post("authorization/login", { username, password });
+function login(username: string, password: string): Promise<Token> {
+    return api
+        .post<Token>("authorization/login", { username, password })
+        .then((r) => r.data);
 }
 
 function register(
