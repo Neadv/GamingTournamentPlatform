@@ -39,6 +39,8 @@ namespace GamingTournamentPlatform.Web.Configuration
 
             services.AddHttpContextAccessor();
 
+            services.AddCors();
+
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddTransient<ITokenGenerator, TokenGenerator>();
 

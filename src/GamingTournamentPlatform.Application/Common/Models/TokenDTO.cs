@@ -3,14 +3,14 @@
     public class TokenDTO
     {
         public string AccessToken { get; set; }
-        public int AcessTokenExpireInMinutes { get; set; }
-        public DateTime AcessTokenExpireDate { get; set; }
+        public int ExpireInMinutes { get; set; }
+        public DateTime ExpireDate { get; set; }
 
         public TokenDTO(string accessToken, int acessTokenExpireInMinutes)
         {
             AccessToken = accessToken;
-            AcessTokenExpireInMinutes = acessTokenExpireInMinutes;
-            AcessTokenExpireDate = DateTime.Now.AddMinutes(acessTokenExpireInMinutes);
+            ExpireInMinutes = acessTokenExpireInMinutes;
+            ExpireDate = DateTime.Now.AddMinutes(acessTokenExpireInMinutes);
         }
     }
 }

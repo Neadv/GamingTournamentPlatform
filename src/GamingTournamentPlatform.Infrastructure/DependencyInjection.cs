@@ -19,7 +19,7 @@ namespace GamingTournamentPlatform.Infrastructure
 
             services.AddScoped<IApplicationDbContext>(s => s.GetRequiredService<ApplicationDbContext>());
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>(opts =>
+            services.AddIdentityCore<ApplicationUser>(opts =>
             {
                 // TODO: Get from appsettings
                 opts.Password.RequireUppercase = false;
@@ -28,6 +28,7 @@ namespace GamingTournamentPlatform.Infrastructure
                 opts.Password.RequiredLength = 6;
                 opts.Password.RequireDigit = true;
             })
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
                 .AddDefaultTokenProviders();
 

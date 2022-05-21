@@ -30,6 +30,13 @@ else
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseCors(b =>
+    {
+        b.AllowAnyHeader();
+        b.AllowAnyMethod();
+        b.WithOrigins(app.Configuration.GetValue<string>("ClientAppDevelopmentServer"));
+    });
 }
 
 app.UseRouting();

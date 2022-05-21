@@ -1,25 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2617300F-865B-41B8-9414-A0186E0D57F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingTournamentPlatform.Application", "src\GamingTournamentPlatform.Application\GamingTournamentPlatform.Application.csproj", "{55E00E7E-1613-41FF-A277-B2C713D50C7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamingTournamentPlatform.Application", "src\GamingTournamentPlatform.Application\GamingTournamentPlatform.Application.csproj", "{55E00E7E-1613-41FF-A277-B2C713D50C7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingTournamentPlatform.Domain", "src\GamingTournamentPlatform.Domain\GamingTournamentPlatform.Domain.csproj", "{8B93BF55-A17A-4530-A5BD-07ACD19219DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamingTournamentPlatform.Domain", "src\GamingTournamentPlatform.Domain\GamingTournamentPlatform.Domain.csproj", "{8B93BF55-A17A-4530-A5BD-07ACD19219DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingTournamentPlatform.Infrastructure", "src\GamingTournamentPlatform.Infrastructure\GamingTournamentPlatform.Infrastructure.csproj", "{53EE6035-012C-4C7A-89CC-A527F772DB74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamingTournamentPlatform.Infrastructure", "src\GamingTournamentPlatform.Infrastructure\GamingTournamentPlatform.Infrastructure.csproj", "{53EE6035-012C-4C7A-89CC-A527F772DB74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingTournamentPlatform.Web", "src\GamingTournamentPlatform.Web\GamingTournamentPlatform.Web.csproj", "{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamingTournamentPlatform.Web", "src\GamingTournamentPlatform.Web\GamingTournamentPlatform.Web.csproj", "{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D204532-38C5-4E42-AB07-44B7DE9F671F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{55E00E7E-1613-41FF-A277-B2C713D50C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -39,10 +41,16 @@ Global
 		{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{55E00E7E-1613-41FF-A277-B2C713D50C7A} = {2617300F-865B-41B8-9414-A0186E0D57F7}
 		{8B93BF55-A17A-4530-A5BD-07ACD19219DB} = {2617300F-865B-41B8-9414-A0186E0D57F7}
 		{53EE6035-012C-4C7A-89CC-A527F772DB74} = {2617300F-865B-41B8-9414-A0186E0D57F7}
 		{C595AEAE-F9B1-410A-8EA9-CB9E85D58DF7} = {2617300F-865B-41B8-9414-A0186E0D57F7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70838491-67E5-49FF-89B3-8BD1E4D002FE}
 	EndGlobalSection
 EndGlobal
