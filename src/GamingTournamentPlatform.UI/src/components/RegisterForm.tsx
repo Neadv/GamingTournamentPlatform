@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Button, Form } from "react-bootstrap";
+import ErrorAlert from "./ErrorAlert";
+import { Link } from "react-router-dom";
+import { Routes } from "../router/Routes";
 
 interface RegisterFormProps {
     register: (username: string, email: string, password: string) => void;
@@ -39,73 +43,89 @@ const RegisterForm: FC<RegisterFormProps> = ({
         },
     });
     return (
-        <form onSubmit={formik.handleSubmit}>
-            {errors && (
-                <div>
-                    {errors.map((e, i) => (
-                        <div key={i}>{e}</div>
-                    ))}
-                </div>
-            )}
-            <div>
-                <label htmlFor="username">Username:</label>
-                <input
+        <Form onSubmit={formik.handleSubmit}>
+            <ErrorAlert errors={errors} />
+            <Form.Group className="mb-3">
+                <Form.Label htmlFor="username">Username:</Form.Label>
+                <Form.Control
                     id="username"
                     name="username"
                     type="text"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.username}
+                    placeholder="Please enter your username"
                 />
-                {formik.errors.username ? (
-                    <div>{formik.errors.username}</div>
+                {formik.touched.username && formik.errors.username ? (
+                    <Form.Text className="text-danger">
+                        {formik.errors.username}
+                    </Form.Text>
                 ) : null}
-            </div>
-            <div>
-                <label htmlFor="email">Email:</label>
-                <input
+            </Form.Group>
+            <Form.Group>
+                <Form.Label htmlFor="email">Email:</Form.Label>
+                <Form.Control
                     id="email"
                     name="email"
                     type="text"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.email}
+                    placeholder="Please enter your email"
                 />
-                {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-            </div>
-            <div>
-                <label htmlFor="password">Password:</label>
-                <input
+                {formik.touched.email && formik.errors.email ? (
+                    <Form.Text className="text-danger">
+                        {formik.errors.email}
+                    </Form.Text>
+                ) : null}
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Label htmlFor="password">Password:</Form.Label>
+                <Form.Control
                     id="password"
                     name="password"
                     type="password"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.password}
+                    placeholder="Please enter your password"
                 />
-                {formik.errors.password ? (
-                    <div>{formik.errors.password}</div>
+                {formik.touched.password && formik.errors.password ? (
+                    <Form.Text className="text-danger">
+                        {formik.errors.password}
+                    </Form.Text>
                 ) : null}
-            </div>
-            <div>
-                <label htmlFor="passwordConfirmation">Confirm password:</label>
-                <input
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Label htmlFor="passwordConfirmation">
+                    Confirm password:
+                </Form.Label>
+                <Form.Control
                     id="passwordConfirmation"
                     name="passwordConfirmation"
                     type="password"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.passwordConfirmation}
+                    placeholder="Confirm your password"
                 />
-                {formik.errors.passwordConfirmation ? (
-                    <div>{formik.errors.passwordConfirmation}</div>
+                {formik.touched.passwordConfirmation &&
+                formik.errors.passwordConfirmation ? (
+                    <Form.Text className="text-danger">
+                        {formik.errors.passwordConfirmation}
+                    </Form.Text>
                 ) : null}
-            </div>
+            </Form.Group>
 
-            <button type="submit" disabled={isLoading}>
+            <Form.Group className="mb-3">
+                <Form.Text>Do you already have an account? </Form.Text>
+                <Link to={Routes.Login}>Sign in!</Link>
+            </Form.Group>
+
+            <Button variant="primary" type="submit" disabled={isLoading}>
                 Register
-            </button>
-        </form>
+            </Button>
+        </Form>
     );
 };
 

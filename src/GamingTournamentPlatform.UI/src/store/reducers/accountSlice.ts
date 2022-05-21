@@ -83,6 +83,10 @@ const accountSlice = createSlice({
             tokenService.removeToken();
             removeAuthorization();
         },
+        clearErrors(state) {
+            state.errors = [];
+            state.success = false;
+        },
     },
     extraReducers: {
         [login.pending.type]: (state) => {
