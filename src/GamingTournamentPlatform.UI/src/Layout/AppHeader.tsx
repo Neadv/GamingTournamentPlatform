@@ -13,7 +13,7 @@ const AppHeader: FC = () => {
                 <Container fluid>
                     <Navbar.Brand as={NavLink} to={Routes.Home}>
                         <img className="header-logo" src={logo} />
-                        Gaming Tournament Platform
+                        Gaming Tournament
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">

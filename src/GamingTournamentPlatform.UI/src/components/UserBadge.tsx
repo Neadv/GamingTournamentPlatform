@@ -1,9 +1,10 @@
 import React, { FC } from "react";
-import { Button } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { accountActions } from "../store/reducers/accountSlice";
 import { Routes } from "../router/Routes";
 import { Link, useNavigate } from "react-router-dom";
+import AppIcon from "./AppIcon";
 
 const UserBadge: FC = () => {
     const { isAuthorized, user } = useAppSelector((s) => s.account);
@@ -16,15 +17,27 @@ const UserBadge: FC = () => {
     };
 
     return !isAuthorized ? (
-        <Link to={Routes.Login} className="btn btn-secondary">
+        <Link to={Routes.Login} className="btn btn-outline-light">
             Log In
         </Link>
     ) : (
-        <div className="d-flex">
-            <div>Hi, {user?.username}</div>
-            <Button variant="secondary" onClick={logout}>
-                Logout
-            </Button>
+        <div className="d-flex align-items-center">
+            <div className="me-2" style={{ lineHeight: "1rem" }}>
+                <div className="text-white">Hi, {user?.username}</div>
+                <div className="text-secondary">{user?.email}</div>
+            </div>
+            <Dropdown>
+                <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
+                    <AppIcon icon="person-circle" large />
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu variant="dark" style={{ left: "-150%" }}>
+                    <Dropdown.Item>Action</Dropdown.Item>
+                    <Dropdown.Item>Another action</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         </div>
     );
 };
