@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { ValidationError } from "../models/ValidationError";
+import { ValidationError } from "models/ValidationError";
 
 class ErrorService {
     public getErrorMessagesFromError(error: AxiosError): string[] {

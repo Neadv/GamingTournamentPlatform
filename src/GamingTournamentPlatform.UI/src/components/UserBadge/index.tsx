@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { Dropdown } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { accountActions } from "../store/reducers/accountSlice";
-import { Routes } from "../router/Routes";
+import { useAppDispatch, useAppSelector } from "hooks/redux";
+import { accountActions } from "store/reducers/accountSlice";
+import { Routes } from "router/Routes";
 import { Link, useNavigate } from "react-router-dom";
-import AppIcon from "./AppIcon";
+import AppIcon from "../AppIcon";
 
 const UserBadge: FC = () => {
     const { isAuthorized, user } = useAppSelector((s) => s.account);

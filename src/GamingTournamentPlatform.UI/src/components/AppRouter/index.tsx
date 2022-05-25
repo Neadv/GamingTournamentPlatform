@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useAppSelector } from "../hooks/redux";
-import { Route as AppRoute, routes } from "../router";
-import { Routes as RouteNames } from "../router/Routes";
+import { useAppSelector } from "hooks/redux";
+import { Route as AppRoute, routes } from "router";
+import { Routes as RouteNames } from "router/Routes";
 
 const AppRouter: FC = () => {
     const { isAuthorized } = useAppSelector((s) => s.account);

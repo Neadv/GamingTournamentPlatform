@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Routes } from "../router/Routes";
+import { Routes } from "router/Routes";
 import { NavLink } from "react-router-dom";
-import logo from "../assets/images/Logo.png";
+import logo from "assets/images/Logo.png";
 import "./AppHeader.scss";
-import UserBadge from "../components/UserBadge";
+import UserBadge from "components/UserBadge";
 
 const AppHeader: FC = () => {
     return (

@@ -1,6 +1,6 @@
 import React from "react";
-import AppRouter from "./components/AppRouter";
-import AppLayout from "./Layout/AppLayout";
+import AppRouter from "components/AppRouter";
+import AppLayout from "layout/AppLayout";
 
 function App() {
     return (

@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { authorizeClient, removeAuthorization } from "../../api";
-import accountApi from "../../api/accountApi";
-import { Token } from "../../models/Token";
-import { User } from "../../models/User";
-import errorService from "../../services/errorService";
-import tokenService from "../../services/tokenService";
-import userService from "../../services/userService";
+import { authorizeClient, removeAuthorization } from "api";
+import accountApi from "api/accountApi";
+import { Token } from "models/Token";
+import { User } from "models/User";
+import errorService from "services/errorService";
+import tokenService from "services/tokenService";
+import userService from "services/userService";
 
 interface AccountState {
     user: User | null;

@@ -1,10 +1,10 @@
 import React, { FC, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { Navigate, useNavigate } from "react-router-dom";
-import RegisterForm from "../../components/RegisterForm";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { Routes } from "../../router/Routes";
-import { accountActions } from "../../store/reducers/accountSlice";
+import RegisterForm from "components/RegisterForm";
+import { useAppDispatch, useAppSelector } from "hooks/redux";
+import { Routes } from "router/Routes";
+import { accountActions } from "store/reducers/accountSlice";
 
 const Register: FC = () => {
     const { isAuthorized, isLoading, errors, success } = useAppSelector(

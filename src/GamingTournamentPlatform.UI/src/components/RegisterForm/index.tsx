@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, Form } from "react-bootstrap";
-import ErrorAlert from "./ErrorAlert";
+import ErrorAlert from "../ErrorAlert";
 import { Link } from "react-router-dom";
-import { Routes } from "../router/Routes";
+import { Routes } from "router/Routes";
 
 interface RegisterFormProps {
     register: (username: string, email: string, password: string) => void;

@@ -1,8 +1,8 @@
 import React from "react";
-import Login from "../pages/account/Login";
-import Register from "../pages/account/Register";
-import Error from "../pages/Error";
-import Home from "../pages/Home";
+import Login from "pages/Account/Login";
+import Register from "pages/Account/Register";
+import Error from "pages/Error";
+import Home from "pages/Home";
 import { Routes } from "./Routes";
 
 export interface Route {

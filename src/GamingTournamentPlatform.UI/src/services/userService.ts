@@ -1,6 +1,6 @@
-import { Token } from "../models/Token";
-import { TokenPayload } from "../models/TokenPayload";
-import { User } from "../models/User";
+import { Token } from "models/Token";
+import { TokenPayload } from "models/TokenPayload";
+import { User } from "models/User";
 import tokenService from "./tokenService";
 
 class userService {

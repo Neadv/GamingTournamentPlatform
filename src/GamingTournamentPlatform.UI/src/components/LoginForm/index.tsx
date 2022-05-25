@@ -3,8 +3,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Routes } from "../router/Routes";
-import ErrorAlert from "./ErrorAlert";
+import { Routes } from "router/Routes";
+import ErrorAlert from "../ErrorAlert";
 
 interface LoginFormProps {
     login: (username: string, password: string) => void;

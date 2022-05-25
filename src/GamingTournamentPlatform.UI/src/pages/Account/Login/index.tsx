@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from "react";
-import LoginForm from "../../components/LoginForm";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import LoginForm from "components/LoginForm";
+import { useAppDispatch, useAppSelector } from "hooks/redux";
 import { Navigate } from "react-router-dom";
-import { Routes } from "../../router/Routes";
-import { accountActions } from "../../store/reducers/accountSlice";
+import { Routes } from "router/Routes";
+import { accountActions } from "store/reducers/accountSlice";
 import { Card } from "react-bootstrap";
 
 const Login: FC = () => {

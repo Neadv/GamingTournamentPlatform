@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 const Error: FC = () => {
     const { code } = useParams();
-    return <div>Error: {code}</div>;
+    return code ? <div>Error: {code}</div> : null;
 };
 
 export default Error;

@@ -1,5 +1,5 @@
-import { TokenPayload } from "../models/TokenPayload";
-import { Token } from "../models/Token";
+import { TokenPayload } from "models/TokenPayload";
+import { Token } from "models/Token";
 import localStorageService from "./localStorageService";
 
 class TokenService {
