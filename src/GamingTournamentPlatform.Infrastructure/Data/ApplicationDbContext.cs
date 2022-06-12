@@ -13,6 +13,7 @@ namespace GamingTournamentPlatform.Infrastructure.Data
         public DbSet<TournamentCategory> TournamentCategories { get; set; } = null!;
         public DbSet<Team> Teams { get; set; } = null!;
         public DbSet<TeamUserApplication> TeamUserApplications { get; set; } = null!;
+        public DbSet<Tournament> Tournaments { get; set; } = null!;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserService currentUserService)
             : base(options)

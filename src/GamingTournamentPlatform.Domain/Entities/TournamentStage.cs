@@ -13,7 +13,7 @@ namespace GamingTournamentPlatform.Domain.Entities
 
         public TournamentStageState State { get; set; }
 
-        public virtual ICollection<TournamentTeamRound> TournamentTeamRounds { get; set; } = new List<TournamentTeamRound>();   
-        public virtual ICollection<TournamentUserRound> TournamentUserRounds { get; set; } = new List<TournamentUserRound>();
+        public virtual IList<TournamentTeamRound> TournamentTeamRounds { get; set; } = new List<TournamentTeamRound>();   
+        public virtual IList<TournamentUserRound> TournamentUserRounds { get; set; } = new List<TournamentUserRound>();
     }
 }

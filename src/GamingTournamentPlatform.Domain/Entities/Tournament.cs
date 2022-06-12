@@ -25,8 +25,8 @@ namespace GamingTournamentPlatform.Domain.Entities
 
         public virtual ICollection<TournamentStage> Stages { get; set; } = new HashSet<TournamentStage>();
 
-        public virtual ICollection<Team> TeamParticipants { get; set; } = new HashSet<Team>();
-        public virtual ICollection<User> UserParticipants { get; set; } = new HashSet<User>();
+        public virtual IList<Team> TeamParticipants { get; set; } = new List<Team>();
+        public virtual IList<User> UserParticipants { get; set; } = new List<User>();
 
         public Tournament(string title, string description)
         {
@@ -35,5 +35,10 @@ namespace GamingTournamentPlatform.Domain.Entities
         }
 
         protected Tournament() { }
+
+        public int GetParticipantCount()
+        {
+            return IsTeamTournament ? TeamParticipants.Count : UserParticipants.Count;
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace GamingTournamentPlatform.Application.Common.Interfaces
         public DbSet<TournamentCategory> TournamentCategories { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamUserApplication> TeamUserApplications { get; set; }
+        public DbSet<Domain.Entities.Tournament> Tournaments { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
