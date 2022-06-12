@@ -1,8 +1,9 @@
 ﻿using GamingTournamentPlatform.Application.Common.Interfaces;
 using GamingTournamentPlatform.Web.Services;
+
 using Microsoft.OpenApi.Models;
 
-namespace GamingTournamentPlatform.Web.Configuration
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class DependencyEnjection
     {

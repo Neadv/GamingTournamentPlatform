@@ -1,6 +1,5 @@
 using GamingTournamentPlatform.Application;
 using GamingTournamentPlatform.Infrastructure;
-using GamingTournamentPlatform.Web.Configuration;
 using GamingTournamentPlatform.Web.Filters;
 
 var builder = WebApplication.CreateBuilder(args);

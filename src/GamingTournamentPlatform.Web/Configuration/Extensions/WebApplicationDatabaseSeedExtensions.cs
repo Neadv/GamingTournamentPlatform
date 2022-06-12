@@ -1,6 +1,6 @@
 ﻿using GamingTournamentPlatform.Infrastructure.Data;
 
-namespace GamingTournamentPlatform.Web.Configuration
+namespace Microsoft.AspNetCore.Builder
 {
     public static class WebApplicationDatabaseSeedExtensions
     {
@@ -9,7 +9,7 @@ namespace GamingTournamentPlatform.Web.Configuration
             var autoMigration = web.Configuration.GetValue<bool>("AutoMigration");
 
             var defaultAdminData = web.Configuration.GetSection("DefaultAdminData").Get<DefaultAdminData>();
-            if (defaultAdminData == null) 
+            if (defaultAdminData == null)
                 throw new NullReferenceException(nameof(defaultAdminData));
 
             web.Services.SeedDbContext(defaultAdminData, autoMigration).GetAwaiter().GetResult();

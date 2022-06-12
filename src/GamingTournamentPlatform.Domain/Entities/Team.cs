@@ -44,5 +44,12 @@ namespace GamingTournamentPlatform.Domain.Entities
 
             return true;
         }
+
+        public void AddLeader(User user)
+        {
+            Leader = user;
+            LeaderId = user.Id;
+            user.LeaderTeams.Add(this);
+        }
     }
 }

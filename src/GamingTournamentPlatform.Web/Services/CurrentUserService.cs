@@ -1,4 +1,5 @@
 ﻿using GamingTournamentPlatform.Application.Common.Interfaces;
+
 using System.Security.Claims;
 
 namespace GamingTournamentPlatform.Web.Services

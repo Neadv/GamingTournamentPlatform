@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿
+using GamingTournamentPlatform.Web.Configuration;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace GamingTournamentPlatform.Web.Configuration
+namespace Microsoft.AspNetCore.Builder
 {
     public static class WebApplicationBuilderAuthorizationExtensions
     {
