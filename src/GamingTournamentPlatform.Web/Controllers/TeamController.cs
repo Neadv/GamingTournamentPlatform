@@ -1,10 +1,12 @@
-﻿using GamingTournamentPlatform.Application.Teams.Commands.Create;
+﻿using GamingTournamentPlatform.Application.Teams.Commands.AcceptApplication;
+using GamingTournamentPlatform.Application.Teams.Commands.Create;
 using GamingTournamentPlatform.Application.Teams.Commands.Delete;
 using GamingTournamentPlatform.Application.Teams.Commands.Invite;
 using GamingTournamentPlatform.Application.Teams.Commands.Update;
 using GamingTournamentPlatform.Application.Teams.Queries.Category;
 using GamingTournamentPlatform.Application.Teams.Queries.List;
 using GamingTournamentPlatform.Application.Teams.Queries.Read;
+using GamingTournamentPlatform.Application.Teams.Queries.ReadApplication;
 
 using MediatR;
 
@@ -69,6 +71,20 @@ namespace GamingTournamentPlatform.Web.Controllers
         public async Task<ActionResult> Invite([FromBody] InviteTeamCommand inviteTeamCommand)
         {
             var result = await Mediator.Send(inviteTeamCommand);
+            return Ok();
+        }
+
+        [HttpGet("{id}/application")]
+        public async Task<ActionResult> GetApplication([FromRoute] int id, [FromQuery] bool invitation = false)
+        {
+            var result = await Mediator.Send(new ReadApplicationQuery { TeamId = id, Invitation = invitation });
+            return Ok(result);
+        }
+
+        [HttpPost("{id}/application/{applicationId}")]
+        public async Task<ActionResult> AccpetApplication([FromRoute] int id, [FromRoute] int applicationId)
+        {
+            var result = await Mediator.Send(new AcceptApplicationCommand { TeamId = id, ApplicationId = applicationId });
             return Ok();
         }
     }

@@ -6,7 +6,9 @@ export interface Team {
     name: string;
     description: string;
     logo?: string;
-    category: Category;
-    leader: User;
-    members: User[];
+    category?: Category;
+    categoryId: number;
+    leader?: User;
+    leaderId: number;
+    participants: User[];
 }

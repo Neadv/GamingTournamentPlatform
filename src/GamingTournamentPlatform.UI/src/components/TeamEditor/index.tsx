@@ -1,28 +1,33 @@
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
+import { Team } from "models/Team";
 import React, { FC, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { categoryActions } from "store/reducers/categorySlice";
 import { getTeamCategories } from "store/selectors/categorySelectors";
 import * as Yup from "yup";
 
-const TeamEditor: FC = () => {
+interface TeamEditorProps {
+    team: Team;
+    save: (team: Team) => void;
+    saveButtonText: string;
+}
+
+const TeamEditor: FC<TeamEditorProps> = ({ team, save, saveButtonText }) => {
     const formik = useFormik({
         initialValues: {
-            name: "",
-            description: "",
-            categoryId: -1,
+            ...team,
         },
         validationSchema: Yup.object({
             name: Yup.string()
                 .min(6, "Name must be at least 6 characters")
                 .required("Required"),
-            description: Yup.string().required("Required"),
-            categoryId: Yup.number().min(0, "Required").required(),
+            description: Yup.string()
+                .min(10, "Min 10 length")
+                .required("Required"),
+            categoryId: Yup.number().min(1, "Required").required(),
         }),
-        onSubmit: (values) => {
-            alert(JSON.stringify(values));
-        },
+        onSubmit: save,
     });
 
     const categories = useAppSelector((s) => getTeamCategories(s.category));
@@ -77,7 +82,7 @@ const TeamEditor: FC = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                 >
-                    <option value={-1} disabled>
+                    <option value={0} disabled>
                         Select tournament category
                     </option>
                     {categories.map((c) => (
@@ -93,7 +98,7 @@ const TeamEditor: FC = () => {
                 )}
             </Form.Group>
             <Button type="submit" className="float-end">
-                Create new Team
+                {saveButtonText}
             </Button>
         </Form>
     );

@@ -2,11 +2,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import teamApi from "api/teamApi";
 import { AxiosError } from "axios";
 import { Team } from "models/Team";
+import { TeamUserApplication } from "models/TeamUserApplication";
 import errorService from "services/errorService";
 
 interface TeamState {
     teams: Team[];
     team: Team | null;
+    applications: TeamUserApplication[];
     isLoading: boolean;
     errors: string[];
 }
@@ -14,6 +16,7 @@ interface TeamState {
 const initialState: TeamState = {
     teams: [],
     team: null,
+    applications: [],
     isLoading: false,
     errors: [],
 };
@@ -27,6 +30,21 @@ const loadTeams = createAsyncThunk("team/loadTeams", async (_, thunkApi) => {
         thunkApi.rejectWithValue(errorService.getErrorMessagesFromError(error));
     }
 });
+
+const loadTeamApplication = createAsyncThunk(
+    "team/loadTeamApplication",
+    async (teamId: number, thunkApi) => {
+        try {
+            const application = await teamApi.getApplications(teamId, false);
+            return application;
+        } catch (e) {
+            const error = e as AxiosError;
+            thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
 
 const loadTeamsByCategoryId = createAsyncThunk(
     "team/loadTeamsByCategoryId",
@@ -58,10 +76,81 @@ const loadTeamById = createAsyncThunk(
     }
 );
 
+const createTeam = createAsyncThunk(
+    "team/createTeam",
+    async (team: Team, thunkApi) => {
+        try {
+            await teamApi.createTeam(team);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const updateTeam = createAsyncThunk(
+    "team/updateTeam",
+    async (team: Team, thunkApi) => {
+        try {
+            await teamApi.updateTeam(team);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const sendApplication = createAsyncThunk(
+    "team/sendApplication",
+    async (application: Omit<TeamUserApplication, "id">, thunkApi) => {
+        try {
+            await teamApi.makeApplication(application);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const acceptApplication = createAsyncThunk(
+    "team/acceptApplication",
+    async (payload: { teamId: number; applicationId: number }, thunkApi) => {
+        try {
+            await teamApi.acceptApplication(
+                payload.teamId,
+                payload.applicationId
+            );
+            return payload.applicationId;
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
 const teamSlice = createSlice({
     name: "team",
     initialState: initialState,
-    reducers: {},
+    reducers: {
+        createNewTeam: (state) => {
+            state.team = {
+                id: 0,
+                name: "",
+                description: "",
+                categoryId: 0,
+                leaderId: 0,
+                participants: [],
+            };
+        },
+    },
     extraReducers: {
         [loadTeams.pending.type]: (state) => {
             state.isLoading = true;
@@ -72,6 +161,24 @@ const teamSlice = createSlice({
             state.teams = payload.payload;
         },
         [loadTeams.rejected.type]: (
+            state,
+            payload: PayloadAction<string[]>
+        ) => {
+            state.isLoading = false;
+            state.errors = payload.payload;
+        },
+        [loadTeamApplication.pending.type]: (state) => {
+            state.isLoading = true;
+            state.errors = [];
+        },
+        [loadTeamApplication.fulfilled.type]: (
+            state,
+            payload: PayloadAction<TeamUserApplication[]>
+        ) => {
+            state.isLoading = false;
+            state.applications = payload.payload;
+        },
+        [loadTeamApplication.rejected.type]: (
             state,
             payload: PayloadAction<string[]>
         ) => {
@@ -114,6 +221,68 @@ const teamSlice = createSlice({
             state.isLoading = false;
             state.errors = payload.payload;
         },
+        [createTeam.pending.type]: (state) => {
+            state.isLoading = true;
+            state.errors = [];
+        },
+        [createTeam.fulfilled.type]: (state) => {
+            state.isLoading = false;
+        },
+        [createTeam.rejected.type]: (
+            state,
+            payload: PayloadAction<string[]>
+        ) => {
+            state.isLoading = false;
+            state.errors = payload.payload;
+        },
+        [updateTeam.pending.type]: (state) => {
+            state.isLoading = true;
+            state.errors = [];
+        },
+        [updateTeam.fulfilled.type]: (state) => {
+            state.isLoading = false;
+        },
+        [updateTeam.rejected.type]: (
+            state,
+            payload: PayloadAction<string[]>
+        ) => {
+            state.isLoading = false;
+            state.errors = payload.payload;
+        },
+        [sendApplication.pending.type]: (state) => {
+            state.isLoading = true;
+            state.errors = [];
+        },
+        [sendApplication.fulfilled.type]: (state) => {
+            state.isLoading = false;
+        },
+        [sendApplication.rejected.type]: (
+            state,
+            payload: PayloadAction<string[]>
+        ) => {
+            state.isLoading = false;
+            state.errors = payload.payload;
+        },
+        [acceptApplication.pending.type]: (state) => {
+            state.isLoading = true;
+            state.errors = [];
+        },
+        [acceptApplication.fulfilled.type]: (
+            state,
+            payload: PayloadAction<number>
+        ) => {
+            state.isLoading = false;
+            state.applications = state.applications.filter(
+                (a) => a.id !== payload.payload
+            );
+        },
+        [acceptApplication.rejected.type]: (
+            state,
+            payload: PayloadAction<string[]>
+        ) => {
+            state.isLoading = false;
+            state.errors = payload.payload;
+        },
     },
 });
 
@@ -122,6 +291,11 @@ export const teamActions = {
     loadTeams,
     loadTeamsByCategoryId,
     loadTeamById,
+    createTeam,
+    updateTeam,
+    sendApplication,
+    loadTeamApplication,
+    acceptApplication,
 };
 
 export default teamSlice.reducer;

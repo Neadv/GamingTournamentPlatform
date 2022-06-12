@@ -5,7 +5,7 @@ export const users: User[] = (function (count: number): User[] {
     for (let i = 1; i <= count; i++) {
         users.push({
             id: i,
-            username: `User${i}`,
+            userName: `User${i}`,
             email: `user${i}@mail.com`,
             roles: [],
         });

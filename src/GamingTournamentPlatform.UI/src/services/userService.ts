@@ -23,7 +23,7 @@ class UserService {
         return {
             id: Number(payload.nameid),
             email: payload.email,
-            username: payload.name,
+            userName: payload.name,
             roles: roles,
         };
     }

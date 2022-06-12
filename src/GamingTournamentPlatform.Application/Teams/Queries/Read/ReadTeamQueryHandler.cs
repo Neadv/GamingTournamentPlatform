@@ -22,7 +22,10 @@ namespace GamingTournamentPlatform.Application.Teams.Queries.Read
 
         public async Task<ReadTeamDTO> Handle(ReadTeamQuery request, CancellationToken cancellationToken)
         {
-            var team = await _context.Teams.Include(t => t.Leader).Include(t => t.Participants).FirstOrDefaultAsync(t => t.Id == request.Id);
+            var team = await _context.Teams.Include(t => t.Category)
+                                           .Include(t => t.Leader)
+                                           .Include(t => t.Participants)
+                                           .FirstOrDefaultAsync(t => t.Id == request.Id);
             if (team == null)
                 throw new NotFoundException(nameof(request));
 

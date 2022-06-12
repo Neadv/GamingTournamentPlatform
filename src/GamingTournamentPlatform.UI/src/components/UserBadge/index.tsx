@@ -23,7 +23,7 @@ const UserBadge: FC = () => {
     ) : (
         <div className="d-flex align-items-center">
             <div className="me-2" style={{ lineHeight: "1rem" }}>
-                <div className="text-white">Hi, {user?.username}</div>
+                <div className="text-white">Hi, {user?.userName}</div>
                 <div className="text-secondary">{user?.email}</div>
             </div>
             <Dropdown>

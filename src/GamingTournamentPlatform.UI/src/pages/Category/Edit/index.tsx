@@ -27,7 +27,7 @@ const EditCategory: FC = () => {
         <Card>
             <Card.Body>
                 <Card.Title className="text-center">
-                    Create new Category
+                    Edit Category #{id}
                 </Card.Title>
                 <div className="mt-3">
                     {category && (

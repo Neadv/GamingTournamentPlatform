@@ -1,4 +1,5 @@
-﻿using GamingTournamentPlatform.Application.Users.Queries;
+﻿using GamingTournamentPlatform.Application.Categories.Queries;
+using GamingTournamentPlatform.Application.Users.Queries;
 
 namespace GamingTournamentPlatform.Application.Teams.Queries
 {
@@ -9,6 +10,7 @@ namespace GamingTournamentPlatform.Application.Teams.Queries
         public string Description { get; set; } = string.Empty;
 
         public int CategoryId { get; set; }
+        public ReadCategoryDTO? Category { get; set; }
 
         public int LeaderId { get; set; }
         public ReadUserDTO? Leader { get; set; }
