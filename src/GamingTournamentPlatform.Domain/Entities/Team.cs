@@ -17,6 +17,8 @@ namespace GamingTournamentPlatform.Domain.Entities
         public virtual IList<User> Participants { get; set; } = new List<User>();
 
         public virtual IList<TeamUserApplication> Applications { get; set; } = new List<TeamUserApplication>();
+        public virtual IList<TournamentApplication> TournamentApplications { get; set; } = new List<TournamentApplication>();
+        public virtual IList<Tournament> Tournaments { get; set; } = new List<Tournament>();
 
         public Team(string name, string description, TournamentCategory category)
         {

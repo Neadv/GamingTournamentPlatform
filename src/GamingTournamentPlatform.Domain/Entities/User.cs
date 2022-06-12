@@ -9,6 +9,8 @@
         public virtual IList<Team> LeaderTeams { get; set; } = new List<Team>();
         public virtual IList<Team> Teams { get; set; } = new List<Team>();
         public virtual IList<TeamUserApplication> TeamApplications { get; set; } = new List<TeamUserApplication>();
+        public virtual IList<TournamentApplication> TournamentApplications { get; set; } = new List<TournamentApplication>();
+        public virtual IList<Tournament> Tournaments { get; set; } = new List<Tournament>();
 
 
         public User(string username, string email)
