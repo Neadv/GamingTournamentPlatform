@@ -28,11 +28,17 @@ namespace GamingTournamentPlatform.Application.Categories.Commands.Create
 
             if (await _applicationDbContext.TournamentCategories.FirstOrDefaultAsync(c => c.Name.ToLower() == category.Name.ToLower()) != null)
             {
-                throw new ValidationException(new Dictionary<string, string[]> { ["Name"] = new string[] { $"There is category with that '{category.Name}' name." } });
+                throw new ValidationException(new Dictionary<string, string[]> 
+                { 
+                    ["Name"] = new string[] { $"There is category with that '{category.Name}' name." } 
+                });
             }
             if (request.ParentId != null && await _applicationDbContext.TournamentCategories.FindAsync(request.ParentId) == null)
             {
-                throw new ValidationException(new Dictionary<string, string[]> { ["Parent"] = new string[] { $"There is no category with that '{request.ParentId}' id." } });
+                throw new ValidationException(new Dictionary<string, string[]> 
+                { 
+                    ["Parent"] = new string[] { $"There is no category with that '{request.ParentId}' id." } 
+                });
             }
 
             _applicationDbContext.TournamentCategories.Add(category);

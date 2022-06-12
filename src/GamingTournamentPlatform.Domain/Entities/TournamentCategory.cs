@@ -7,6 +7,7 @@
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public bool AllowCreatingTeams { get; set; } = false;
+        public bool AllowOrganizeCompetitions { get; set; } = true;
 
         public int? ParentId { get; set; }
         public virtual TournamentCategory? Parent { get; set; }
