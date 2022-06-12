@@ -22,11 +22,8 @@ const AppHeader: FC = () => {
                             style={{ maxHeight: "100px" }}
                             navbarScroll
                         >
-                            <Nav.Link as={NavLink} to="/test2">
-                                Link
-                            </Nav.Link>
                             <NavDropdown
-                                title="Link"
+                                title="Tournaments"
                                 id="navbarScrollingDropdown"
                                 menuVariant="dark"
                             >
@@ -42,7 +39,7 @@ const AppHeader: FC = () => {
                                 </NavDropdown.Item>
                             </NavDropdown>
                             <Nav.Link as={NavLink} to="/error/404">
-                                Link
+                                Teams
                             </Nav.Link>
                         </Nav>
                         <UserBadge />

@@ -3,7 +3,7 @@ import { TokenPayload } from "models/TokenPayload";
 import { User } from "models/User";
 import tokenService from "./tokenService";
 
-class userService {
+class UserService {
     public getUserFromToken(token: Token) {
         const tokenPayload = tokenService.getTokenPayload(token.accessToken);
         if (tokenPayload) {
@@ -29,4 +29,4 @@ class userService {
     }
 }
 
-export default new userService();
+export default new UserService();

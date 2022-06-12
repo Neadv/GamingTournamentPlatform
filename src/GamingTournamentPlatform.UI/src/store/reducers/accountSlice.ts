@@ -3,10 +3,10 @@ import { AxiosError } from "axios";
 import { authorizeClient, removeAuthorization } from "api";
 import accountApi from "api/accountApi";
 import { Token } from "models/Token";
-import { User } from "models/User";
 import errorService from "services/errorService";
 import tokenService from "services/tokenService";
-import userService from "services/userService";
+import UserService from "services/userService";
+import { User } from "models/User";
 
 interface AccountState {
     user: User | null;
@@ -25,7 +25,7 @@ if (token) {
 
 const initialState: AccountState = {
     token: token,
-    user: token ? userService.getUserFromToken(token) : null,
+    user: token ? UserService.getUserFromToken(token) : null,
     isAuthorized: token !== null,
     isLoading: false,
     success: false,
@@ -96,7 +96,7 @@ const accountSlice = createSlice({
         [login.fulfilled.type]: (state, action: PayloadAction<Token>) => {
             state.isLoading = false;
             state.token = action.payload;
-            state.user = userService.getUserFromToken(action.payload);
+            state.user = UserService.getUserFromToken(action.payload);
             state.isAuthorized = true;
             tokenService.save(state.token);
             authorizeClient(state.token.accessToken);

@@ -5,10 +5,17 @@ import { Route as AppRoute, routes } from "router";
 import { Routes as RouteNames } from "router/Routes";
 
 const AppRouter: FC = () => {
-    const { isAuthorized } = useAppSelector((s) => s.account);
+    const { isAuthorized, user } = useAppSelector((s) => s.account);
 
     const checkRoute = (route: AppRoute) => {
-        return !route.private || (route.private && isAuthorized);
+        return (
+            !route.private ||
+            (route.private && isAuthorized && !route.allowedRoles) ||
+            (route.private &&
+                isAuthorized &&
+                route.allowedRoles &&
+                route.allowedRoles.some((r) => user?.roles.includes(r)))
+        );
     };
 
     return (
@@ -24,7 +31,15 @@ const AppRouter: FC = () => {
                 ))}
             <Route
                 path="*"
-                element={<Navigate to={RouteNames.Error + "404"} />}
+                element={
+                    <Navigate
+                        to={
+                            isAuthorized
+                                ? RouteNames.Error + "404"
+                                : RouteNames.Login
+                        }
+                    />
+                }
             />
         </Routes>
     );
