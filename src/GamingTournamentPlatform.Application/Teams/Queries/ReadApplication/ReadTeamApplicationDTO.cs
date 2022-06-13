@@ -3,7 +3,7 @@ using GamingTournamentPlatform.Application.Users.Queries;
 
 namespace GamingTournamentPlatform.Application.Teams.Queries.ReadApplication
 {
-    public class ReadApplicationDTO
+    public class ReadTeamApplicationDTO
     {
         public int Id { get; set; }
         public string Message { get; set; } = string.Empty;
@@ -13,5 +13,6 @@ namespace GamingTournamentPlatform.Application.Teams.Queries.ReadApplication
         public ReadUserDTO? User { get; set; }
 
         public int TeamId { get; set; }
+        public ReadTeamDTO? Team { get; set; }
     }
 }

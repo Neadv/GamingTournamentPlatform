@@ -24,17 +24,26 @@ namespace GamingTournamentPlatform.Application.Teams.Commands.AcceptApplication
             if (team == null)
                 throw new NotFoundException(nameof(team));
 
-            if (team.LeaderId != _currentUserService.UserId)
+
+            var application = team.Applications.FirstOrDefault(a => a.Id == request.ApplicationId);
+            if (application == null)
+                throw new NotFoundException();
+
+            if (application.Inventation && _currentUserService.UserId != application.UserId)
+            {
+                throw new ValidationException(new Dictionary<string, string[]>
+                {
+                    ["User"] = new string[] { "Only invited user can accept application" }
+                });
+            }
+
+            if (!application.Inventation && team.LeaderId != _currentUserService.UserId)
             {
                 throw new ValidationException(new Dictionary<string, string[]>
                 {
                     ["Leader"] = new string[] { "Only team leader can modify team parameters" }
                 });
             }
-
-            var application = team.Applications.FirstOrDefault(a => a.Id == request.ApplicationId);
-            if (application == null)
-                throw new NotFoundException();
 
             team.Applications.Remove(application);
             team.Participants.Add(application.User!);

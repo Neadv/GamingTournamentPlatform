@@ -12,4 +12,5 @@ export enum Routes {
     CreateCategory = "/category/create",
     EditCategory = "/category/",
     User = "/user/",
+    UserTeamApplications = "/user/team-applications",
 }

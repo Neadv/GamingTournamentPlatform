@@ -12,6 +12,8 @@ import TournamentInfo from "pages/Tournament/Info";
 import CreateCategory from "pages/Category/Create";
 import EditCategory from "pages/Category/Edit";
 import EditTeam from "pages/Team/Edit";
+import UserInfo from "pages/User/Info";
+import UserTeamApplications from "pages/User/TeamApplications";
 
 export interface Route {
     path: string;
@@ -86,5 +88,15 @@ export const routes: Route[] = [
         component: EditCategory,
         private: true,
         allowedRoles: ["Admin"],
+    },
+    {
+        path: Routes.User + ":id",
+        component: UserInfo,
+        private: false,
+    },
+    {
+        path: Routes.UserTeamApplications,
+        component: UserTeamApplications,
+        private: true,
     },
 ];

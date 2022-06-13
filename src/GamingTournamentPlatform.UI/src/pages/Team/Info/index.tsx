@@ -69,7 +69,8 @@ const TeamInfo: FC = () => {
                         <ListGroup className="m-2">
                             <ListGroup.Item
                                 action
-                                href={`/user/${team?.leader?.id}`}
+                                as={Link}
+                                to={`/user/${team?.leader?.id}`}
                                 variant={"primary"}
                             >
                                 {team?.leader?.userName}
@@ -77,7 +78,8 @@ const TeamInfo: FC = () => {
                             {team?.participants.map((m) => (
                                 <ListGroup.Item
                                     action
-                                    href={`/user/${m.id}`}
+                                    as={Link}
+                                    to={`/user/${m.id}`}
                                     key={m.id}
                                 >
                                     {m.userName}

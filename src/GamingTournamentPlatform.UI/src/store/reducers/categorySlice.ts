@@ -63,7 +63,7 @@ const createCategory = createAsyncThunk(
 );
 
 const updateCategory = createAsyncThunk(
-    "category/createCategory",
+    "category/updateCategory",
     async (category: Category, thunkApi) => {
         try {
             await categoryApi.updateCategory(category);

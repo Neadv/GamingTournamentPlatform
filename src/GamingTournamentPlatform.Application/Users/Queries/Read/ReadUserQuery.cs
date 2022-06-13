@@ -2,7 +2,7 @@
 
 namespace GamingTournamentPlatform.Application.Users.Queries.Read
 {
-    public class ReadUserQuery: IRequest<ReadUserDTO>
+    public class ReadUserQuery: IRequest<ReadUserDetailsDTO>
     {
         public int Id { get; set; }
     }

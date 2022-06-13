@@ -1,3 +1,4 @@
+import { Team } from "./Team";
 import { User } from "./User";
 
 export interface TeamUserApplication {
@@ -7,4 +8,5 @@ export interface TeamUserApplication {
     invitation: boolean;
     message: string;
     user?: User;
+    team?: Team;
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GamingTournamentPlatform.Application.Teams.Queries.ReadApplication
 {
-    public class ReadApplicationQueryHandler : IRequestHandler<ReadApplicationQuery, IEnumerable<ReadApplicationDTO>>
+    public class ReadApplicationQueryHandler : IRequestHandler<ReadApplicationQuery, IEnumerable<ReadTeamApplicationDTO>>
     {
         private readonly IApplicationDbContext _context;
         private readonly ICurrentUserService _currentUserService;
@@ -22,7 +22,7 @@ namespace GamingTournamentPlatform.Application.Teams.Queries.ReadApplication
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ReadApplicationDTO>> Handle(ReadApplicationQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ReadTeamApplicationDTO>> Handle(ReadApplicationQuery request, CancellationToken cancellationToken)
         {
             var team = await _context.Teams.Include(t => t.Applications).ThenInclude(a => a.User).FirstOrDefaultAsync(t => t.Id == request.TeamId);
             if (team == null)
@@ -36,7 +36,7 @@ namespace GamingTournamentPlatform.Application.Teams.Queries.ReadApplication
                 });
             }
 
-            return _mapper.Map<IEnumerable<ReadApplicationDTO>>(team.Applications);
+            return _mapper.Map<IEnumerable<ReadTeamApplicationDTO>>(team.Applications);
         }
     }
 }

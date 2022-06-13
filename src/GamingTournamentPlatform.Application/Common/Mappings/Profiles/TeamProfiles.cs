@@ -15,7 +15,7 @@ namespace GamingTournamentPlatform.Application.Common.Mappings.Profiles
             CreateMap<CreateTeamCommand, Team>().ForAllMembers(opts => opts.Condition((obj, dest, member) => member != null));
             CreateMap<UpdateTeamCommand, Team>().ForAllMembers(opts => opts.Condition((obj, dest, member) => member != null));
             CreateMap<Team, ReadTeamDTO>();
-            CreateMap<TeamUserApplication, ReadApplicationDTO>().ForMember(dest => dest.Invitation, opts => opts.MapFrom(src => src.Inventation));
+            CreateMap<TeamUserApplication, ReadTeamApplicationDTO>().ForMember(dest => dest.Invitation, opts => opts.MapFrom(src => src.Inventation));
         }
     }
 }

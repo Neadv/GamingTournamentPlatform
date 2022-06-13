@@ -32,8 +32,12 @@ const UserBadge: FC = () => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu variant="dark" style={{ left: "-150%" }}>
-                    <Dropdown.Item>Action</Dropdown.Item>
-                    <Dropdown.Item>Another action</Dropdown.Item>
+                    <Dropdown.Item as={Link} to={Routes.User + user?.id}>
+                        Information
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to={Routes.UserTeamApplications}>
+                        Team Application
+                    </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>

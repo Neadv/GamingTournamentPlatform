@@ -1,14 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import teamApi from "api/teamApi";
 import userApi from "api/userApi";
 import { AxiosError } from "axios";
+import { TeamUserApplication } from "models/TeamUserApplication";
 import { User } from "models/User";
+import { UserDetails } from "models/UserDetails";
 import errorService from "services/errorService";
 
 interface UserState {
     users: User[];
-    user: User | null;
+    user: UserDetails | null;
     isLoading: boolean;
     errors: string[];
+    teamApplications: TeamUserApplication[];
 }
 
 const initialState: UserState = {
@@ -16,6 +20,7 @@ const initialState: UserState = {
     user: null,
     isLoading: false,
     errors: [],
+    teamApplications: [],
 };
 
 const loadUsers = createAsyncThunk("user/loadUsers", async (_, thunkApi) => {
@@ -34,6 +39,36 @@ const loadUserById = createAsyncThunk(
         try {
             const user = await userApi.loadUserById(id);
             return user;
+        } catch (e) {
+            const error = e as AxiosError;
+            thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const loadTeamApplication = createAsyncThunk(
+    "user/loadTeamApplication",
+    async (_, thunkApi) => {
+        try {
+            const applications = await userApi.loadUserTeamApplication();
+            return applications;
+        } catch (e) {
+            const error = e as AxiosError;
+            thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const acceptTeamApplication = createAsyncThunk(
+    "user/acceptTeamApplication",
+    async (application: TeamUserApplication, thunkApi) => {
+        try {
+            await teamApi.acceptApplication(application.teamId, application.id);
+            return application.id;
         } catch (e) {
             const error = e as AxiosError;
             thunkApi.rejectWithValue(
@@ -69,12 +104,50 @@ const userSlice = createSlice({
         },
         [loadUserById.fulfilled.type]: (
             state,
-            payload: PayloadAction<User>
+            payload: PayloadAction<UserDetails>
         ) => {
             state.user = payload.payload;
             state.isLoading = false;
         },
         [loadUserById.rejected.type]: (
+            state,
+            payload: PayloadAction<string[]>
+        ) => {
+            state.isLoading = false;
+            state.errors = payload.payload;
+        },
+        [loadTeamApplication.pending.type]: (state) => {
+            state.isLoading = true;
+            state.errors = [];
+        },
+        [loadTeamApplication.fulfilled.type]: (
+            state,
+            payload: PayloadAction<TeamUserApplication[]>
+        ) => {
+            state.isLoading = false;
+            state.teamApplications = payload.payload;
+        },
+        [loadTeamApplication.rejected.type]: (
+            state,
+            payload: PayloadAction<string[]>
+        ) => {
+            state.isLoading = false;
+            state.errors = payload.payload;
+        },
+        [acceptTeamApplication.pending.type]: (state) => {
+            state.isLoading = true;
+            state.errors = [];
+        },
+        [acceptTeamApplication.fulfilled.type]: (
+            state,
+            payload: PayloadAction<number>
+        ) => {
+            state.isLoading = false;
+            state.teamApplications = state.teamApplications.filter(
+                (t) => t.id !== payload.payload
+            );
+        },
+        [acceptTeamApplication.rejected.type]: (
             state,
             payload: PayloadAction<string[]>
         ) => {
@@ -88,6 +161,8 @@ export const userActions = {
     ...userSlice.actions,
     loadUsers,
     loadUserById,
+    loadTeamApplication,
+    acceptTeamApplication,
 };
 
 export default userSlice.reducer;
