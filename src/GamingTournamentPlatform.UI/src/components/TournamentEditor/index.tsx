@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
-import { TournamentType } from "models/Tournament";
+import { LookupEntity } from "models/LookupEntity";
+import { Tournament } from "models/tournaments/Tournament";
+import { TournamentType } from "models/tournaments/TournamentDetails";
 import React, { FC, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
@@ -9,16 +11,21 @@ import { categoryActions } from "store/reducers/categorySlice";
 import { getTeamCategories } from "store/selectors/categorySelectors";
 import * as Yup from "yup";
 
-const TournamentEditor: FC = () => {
+interface TournamentEditorProps {
+    tournament: Tournament;
+    save: (tournament: Tournament) => void;
+    saveButtonText?: string;
+    showRegistrationDate?: boolean;
+}
+
+const TournamentEditor: FC<TournamentEditorProps> = ({
+    tournament,
+    save,
+    saveButtonText = "Save",
+    showRegistrationDate = true,
+}) => {
     const formik = useFormik({
-        initialValues: {
-            title: "",
-            description: "",
-            type: -1,
-            categoryId: -1,
-            registrationDeadline: new Date(),
-            isPublic: true,
-        },
+        initialValues: { ...tournament },
         validationSchema: Yup.object({
             title: Yup.string()
                 .min(6, "Title must be at least 6 characters")
@@ -29,12 +36,10 @@ const TournamentEditor: FC = () => {
             categoryId: Yup.number().min(0, "Required").required("Required"),
             registrationDeadline: Yup.date().required("Required"),
         }),
-        onSubmit: (values) => {
-            alert(JSON.stringify(values));
-        },
+        onSubmit: save,
     });
 
-    const tournamentTypes = enumToLookupArray(TournamentType);
+    const tournamentTypes: LookupEntity[] = enumToLookupArray(TournamentType);
 
     const categories = useAppSelector((s) => getTeamCategories(s.category));
     const dispatch = useAppDispatch();
@@ -86,7 +91,12 @@ const TournamentEditor: FC = () => {
                     id="categoryId"
                     name="categoryId"
                     value={formik.values.categoryId}
-                    onChange={formik.handleChange}
+                    onChange={(v) =>
+                        formik.setFieldValue(
+                            "categoryId",
+                            Number(v.target.value)
+                        )
+                    }
                     onBlur={formik.handleBlur}
                 >
                     <option value={-1} disabled>
@@ -120,13 +130,15 @@ const TournamentEditor: FC = () => {
                 )}
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Label htmlFor="description">Type:</Form.Label>
+                <Form.Label htmlFor="type">Type:</Form.Label>
                 <Form.Control
                     as="select"
                     id="type"
                     name="type"
                     value={formik.values.type}
-                    onChange={formik.handleChange}
+                    onChange={(v) =>
+                        formik.setFieldValue("type", Number(v.target.value))
+                    }
                     onBlur={formik.handleBlur}
                 >
                     <option value={-1} disabled>
@@ -144,34 +156,36 @@ const TournamentEditor: FC = () => {
                     </Form.Text>
                 )}
             </Form.Group>
-            <Form.Group className="mb-3">
-                <Form.Label htmlFor="registrationDeadline">
-                    Registration Deadline:
-                </Form.Label>
-                <DatePicker
-                    id="registrationDeadline"
-                    name="registrationDeadline"
-                    minDate={new Date()}
-                    minTime={new Date()}
-                    maxTime={new Date(new Date().setHours(23, 59))}
-                    selected={formik.values.registrationDeadline}
-                    onChange={(e) =>
-                        formik.setFieldValue("registrationDeadline", e)
-                    }
-                    onBlur={formik.handleBlur}
-                    dateFormat="dd/MM/yyyy HH:mm"
-                    timeFormat="HH:mm"
-                    showTimeSelect
-                />
-                {formik.touched.registrationDeadline &&
-                    formik.errors.registrationDeadline && (
-                        <Form.Text className="text-danger">
-                            {formik.errors.registrationDeadline}
-                        </Form.Text>
-                    )}
-            </Form.Group>
+            {showRegistrationDate && (
+                <Form.Group className="mb-3">
+                    <Form.Label htmlFor="registrationDeadline">
+                        Registration Deadline:
+                    </Form.Label>
+                    <DatePicker
+                        id="registrationDeadline"
+                        name="registrationDeadline"
+                        selected={new Date(formik.values.registrationDeadline)}
+                        onChange={(e) =>
+                            formik.setFieldValue(
+                                "registrationDeadline",
+                                e?.toISOString()
+                            )
+                        }
+                        onBlur={formik.handleBlur}
+                        dateFormat="dd/MM/yyyy HH:mm"
+                        timeFormat="HH:mm"
+                        showTimeSelect
+                    />
+                    {formik.touched.registrationDeadline &&
+                        formik.errors.registrationDeadline && (
+                            <Form.Text className="text-danger">
+                                {formik.errors.registrationDeadline}
+                            </Form.Text>
+                        )}
+                </Form.Group>
+            )}
             <Button className="float-end" type="submit">
-                Create Tournament
+                {saveButtonText}
             </Button>
         </Form>
     );

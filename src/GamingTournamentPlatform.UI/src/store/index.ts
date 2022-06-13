@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import accountReducer from "./reducers/accountSlice";
 import categoryReducer from "./reducers/categorySlice";
 import teamReducer from "./reducers/teamSlice";
+import tournamentReducer from "./reducers/tournamentSlice";
 import userReducer from "./reducers/userSlice";
 
 const rootReducer = combineReducers({
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
     category: categoryReducer,
     user: userReducer,
     team: teamReducer,
+    tournament: tournamentReducer,
 });
 
 const setupStore = () => {

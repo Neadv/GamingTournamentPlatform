@@ -1,6 +1,6 @@
 ﻿namespace GamingTournamentPlatform.Application.Tournaments.Queries.DTOs
 {
-    public class ReadRegistrationInfoDTO
+    public class RegistrationInfoDTO
     {
         public int Id { get; set; }
 

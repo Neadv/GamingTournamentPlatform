@@ -1,6 +1,4 @@
-﻿using GamingTournamentPlatform.Application.Tournaments.Queries.DTOs;
-
-using MediatR;
+﻿using MediatR;
 
 namespace GamingTournamentPlatform.Application.Tournaments.Queries.Read
 {

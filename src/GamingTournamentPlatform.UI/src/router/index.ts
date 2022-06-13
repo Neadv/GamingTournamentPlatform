@@ -14,6 +14,7 @@ import EditCategory from "pages/Category/Edit";
 import EditTeam from "pages/Team/Edit";
 import UserInfo from "pages/User/Info";
 import UserTeamApplications from "pages/User/TeamApplications";
+import EditTournament from "pages/Tournament/Edit";
 
 export interface Route {
     path: string;
@@ -60,6 +61,11 @@ export const routes: Route[] = [
     {
         path: Routes.TournamentInfo + ":id",
         component: TournamentInfo,
+        private: true,
+    },
+    {
+        path: Routes.TournamentEdit + ":id",
+        component: EditTournament,
         private: true,
     },
     {

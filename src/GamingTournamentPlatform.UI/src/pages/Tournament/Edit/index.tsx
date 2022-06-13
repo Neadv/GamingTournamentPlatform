@@ -1,19 +1,22 @@
 import TournamentEditor from "components/TournamentEditor";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
+import { TournamentState } from "models/tournaments/TournamentDetails";
 import React, { FC, useEffect } from "react";
 import { Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Routes } from "router/Routes";
 import { tournamentActions } from "store/reducers/tournamentSlice";
 
-const CreateTournament: FC = () => {
+const EditTournament: FC = () => {
     const dispatch = useAppDispatch();
     const { tournament, isSuccess } = useAppSelector((s) => s.tournament);
+    const { id } = useParams();
+    const { user } = useAppSelector((s) => s.account);
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(tournamentActions.createNewTournament());
-    }, []);
+        dispatch(tournamentActions.loadTournamentById(Number(id)));
+    }, [id]);
 
     useEffect(() => {
         if (isSuccess && tournament) {
@@ -22,21 +25,32 @@ const CreateTournament: FC = () => {
         }
     }, [isSuccess]);
 
+    useEffect(() => {
+        if (
+            tournament &&
+            user &&
+            (tournament.organizerId !== user.id ||
+                tournament.state !== TournamentState.New)
+        ) {
+            navigate(Routes.TournamentInfo + tournament.id);
+        }
+    }, [tournament, user]);
+
     return (
         <Card>
             <Card.Body>
                 <Card.Title className="text-center">
-                    Create new Tournament
+                    Edit Tournament #{id}
                 </Card.Title>
                 <div className="mt-3">
                     {tournament && (
                         <TournamentEditor
                             tournament={tournament}
-                            saveButtonText="Create new Tournament"
-                            showRegistrationDate
+                            saveButtonText="Edit Tournament Info"
+                            showRegistrationDate={false}
                             save={(tournament) =>
                                 dispatch(
-                                    tournamentActions.createTournament(
+                                    tournamentActions.updateTournament(
                                         tournament
                                     )
                                 )
@@ -49,4 +63,4 @@ const CreateTournament: FC = () => {
     );
 };
 
-export default CreateTournament;
+export default EditTournament;

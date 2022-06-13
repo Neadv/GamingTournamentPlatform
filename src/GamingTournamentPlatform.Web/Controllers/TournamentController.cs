@@ -10,6 +10,7 @@ using GamingTournamentPlatform.Application.Tournaments.Commands.StartRound;
 using GamingTournamentPlatform.Application.Tournaments.Commands.Update;
 using GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRegistration;
 using GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRound;
+using GamingTournamentPlatform.Application.Tournaments.Queries.Details;
 using GamingTournamentPlatform.Application.Tournaments.Queries.Read;
 
 using MediatR;
@@ -31,6 +32,13 @@ namespace GamingTournamentPlatform.Web.Controllers
         {
             var result = await Mediator.Send(createTournamentCommand);
             return Ok(result);
+        }
+
+        [HttpGet("{id}/details")]
+        public async Task<ActionResult> GetDetailsById([FromRoute] int id)
+        {
+            var result = await Mediator.Send(new DetailsTournamentQuery { Id = id });
+            return result != null ? Ok(result) : Ok();
         }
 
         [HttpGet("{id}")]

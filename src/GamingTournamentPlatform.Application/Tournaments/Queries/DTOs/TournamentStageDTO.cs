@@ -2,7 +2,7 @@
 
 namespace GamingTournamentPlatform.Application.Tournaments.Queries.DTOs
 {
-    public class ReadTournamentStageDTO
+    public class TournamentStageDTO
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

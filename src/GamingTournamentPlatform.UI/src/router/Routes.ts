@@ -6,6 +6,7 @@ export enum Routes {
     CreateTournament = "/tournament/create",
     TournamentRegistration = "/tournament/registration/",
     TournamentInfo = "/tournament/",
+    TournamentEdit = "/tournament/edit/",
     CreateTeam = "/team/create",
     TeamInfo = "/team/",
     EditTeam = "/team/edit/",

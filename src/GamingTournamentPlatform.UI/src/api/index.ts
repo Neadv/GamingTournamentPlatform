@@ -20,8 +20,6 @@ instance.interceptors.response.use(
     (config) => config,
     (error) => {
         const e = error as AxiosError;
-        console.log("+");
-
         if (e.response?.status === 401) {
             removeAuthorization();
             tokenService.removeToken();
