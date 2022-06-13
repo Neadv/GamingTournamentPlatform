@@ -1,4 +1,5 @@
 import { TeamUserApplication } from "models/TeamUserApplication";
+import { TournamentApplication } from "models/tournaments/TournamentApplication";
 import { User } from "models/User";
 import { UserDetails } from "models/UserDetails";
 import api from ".";
@@ -15,8 +16,13 @@ function loadUserTeamApplication(): Promise<TeamUserApplication[]> {
     return api.get("user/team/application").then((r) => r.data);
 }
 
+function loadUserTournamentApplication(): Promise<TournamentApplication[]> {
+    return api.get("user/team/application").then((r) => r.data);
+}
+
 export default {
     loadUsers,
     loadUserById,
     loadUserTeamApplication,
+    loadUserTournamentApplication,
 };

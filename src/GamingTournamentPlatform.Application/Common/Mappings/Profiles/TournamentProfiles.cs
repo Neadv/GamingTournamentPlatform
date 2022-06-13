@@ -27,6 +27,8 @@ namespace GamingTournamentPlatform.Application.Common.Mappings.Profiles
 
             CreateMap<Tournament, ReadTournamentDTO>().ForMember(dest => dest.RegistrationDeadline, opts => opts.MapFrom(src => src.RegistrationInfo!.RegistrationDeadline));
             CreateMap<TournamentApplication, TournamentApplicationDTO>();
+
+            CreateMap<TournamentApplication, ReadTournamentApplicationDTO>().ForMember(dest => dest.Tournament, opts => opts.MapFrom(src => src.RegistrationInfo!.Tournament));
         }
     }
 }

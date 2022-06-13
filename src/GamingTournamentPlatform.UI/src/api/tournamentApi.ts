@@ -1,6 +1,6 @@
 import { Tournament } from "models/tournaments/Tournament";
 import { TournamentApplication } from "models/tournaments/TournamentApplication";
-import { TournamentApplicationDTO } from "models/tournaments/TournamentApplicationDTO";
+import { CreateTournamentApplicationDTO } from "models/tournaments/CreateTournamentApplicationDTO";
 import { TournamentDetails } from "models/tournaments/TournamentDetails";
 import api from ".";
 
@@ -48,7 +48,9 @@ function getApplications(
         .then((r) => r.data);
 }
 
-function makeApplication(application: TournamentApplicationDTO): Promise<void> {
+function makeApplication(
+    application: CreateTournamentApplicationDTO
+): Promise<void> {
     return api.post("tournament/invite", application);
 }
 

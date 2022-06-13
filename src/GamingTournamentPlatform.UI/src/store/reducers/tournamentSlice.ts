@@ -3,7 +3,7 @@ import tournamentApi from "api/tournamentApi";
 import { AxiosError } from "axios";
 import { Tournament } from "models/tournaments/Tournament";
 import { TournamentApplication } from "models/tournaments/TournamentApplication";
-import { TournamentApplicationDTO } from "models/tournaments/TournamentApplicationDTO";
+import { CreateTournamentApplicationDTO } from "models/tournaments/CreateTournamentApplicationDTO";
 import {
     TournamentDetails,
     TournamentState as State,
@@ -155,7 +155,7 @@ const loadTournamentApplicationsById = createAsyncThunk(
 
 const makeApplication = createAsyncThunk(
     "tournament/makeApplication",
-    async (application: TournamentApplicationDTO, thunkApi) => {
+    async (application: CreateTournamentApplicationDTO, thunkApi) => {
         try {
             await tournamentApi.makeApplication(application);
         } catch (e) {

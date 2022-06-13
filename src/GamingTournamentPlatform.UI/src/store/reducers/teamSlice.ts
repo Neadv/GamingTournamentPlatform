@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import teamApi from "api/teamApi";
+import tournamentApi from "api/tournamentApi";
 import { AxiosError } from "axios";
 import { Team } from "models/Team";
 import { TeamUserApplication } from "models/TeamUserApplication";
+import { TournamentApplication } from "models/tournaments/TournamentApplication";
 import errorService from "services/errorService";
 
 interface TeamState {
@@ -11,6 +13,7 @@ interface TeamState {
     applications: TeamUserApplication[];
     isLoading: boolean;
     errors: string[];
+    tournamentApplications: TournamentApplication[];
 }
 
 const initialState: TeamState = {
@@ -19,6 +22,7 @@ const initialState: TeamState = {
     applications: [],
     isLoading: false,
     errors: [],
+    tournamentApplications: [],
 };
 
 const loadTeams = createAsyncThunk("team/loadTeams", async (_, thunkApi) => {
@@ -130,6 +134,41 @@ const acceptApplication = createAsyncThunk(
         } catch (e) {
             const error = e as AxiosError;
             return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const loadTournamentApplication = createAsyncThunk(
+    "team/loadTournamentApplication",
+    async (teamId: number, thunkApi) => {
+        try {
+            const applications = await teamApi.getTournamentApplication(teamId);
+            return applications;
+        } catch (e) {
+            const error = e as AxiosError;
+            thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const acceptTournamentApplication = createAsyncThunk(
+    "team/acceptTournamentApplication",
+    async (application: TournamentApplication, thunkApi) => {
+        try {
+            if (application.tournament) {
+                await tournamentApi.acceptApplication(
+                    application.tournament?.id,
+                    application.id
+                );
+            }
+            return application.id;
+        } catch (e) {
+            const error = e as AxiosError;
+            thunkApi.rejectWithValue(
                 errorService.getErrorMessagesFromError(error)
             );
         }
@@ -283,6 +322,22 @@ const teamSlice = createSlice({
             state.isLoading = false;
             state.errors = payload.payload;
         },
+        [loadTournamentApplication.fulfilled.type]: (
+            state,
+            payload: PayloadAction<TournamentApplication[]>
+        ) => {
+            state.isLoading = false;
+            state.tournamentApplications = payload.payload;
+        },
+        [acceptTournamentApplication.fulfilled.type]: (
+            state,
+            payload: PayloadAction<number>
+        ) => {
+            state.isLoading = false;
+            state.tournamentApplications = state.tournamentApplications.filter(
+                (t) => t.id !== payload.payload
+            );
+        },
     },
 });
 
@@ -296,6 +351,8 @@ export const teamActions = {
     sendApplication,
     loadTeamApplication,
     acceptApplication,
+    loadTournamentApplication,
+    acceptTournamentApplication,
 };
 
 export default teamSlice.reducer;

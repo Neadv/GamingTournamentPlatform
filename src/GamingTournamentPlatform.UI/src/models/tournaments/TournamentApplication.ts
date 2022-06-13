@@ -1,5 +1,6 @@
 import { Team } from "models/Team";
 import { User } from "models/User";
+import { Tournament } from "./Tournament";
 
 export interface TournamentApplication {
     id: number;
@@ -11,4 +12,6 @@ export interface TournamentApplication {
 
     teamId?: number;
     team?: Team;
+
+    tournament?: Tournament;
 }

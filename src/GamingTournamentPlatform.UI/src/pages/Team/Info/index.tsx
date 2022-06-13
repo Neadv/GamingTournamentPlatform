@@ -1,4 +1,5 @@
 import SendMessagePopup from "components/SendMessagePopup";
+import TeamApplicationList from "components/TeamApplicationList";
 import TeamUserApplicationModal from "components/TeamUserApplicationModal";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 import React, { FC, useEffect, useState } from "react";
@@ -87,6 +88,15 @@ const TeamInfo: FC = () => {
                             ))}
                         </ListGroup>
                     </Tab>
+                    {user?.id === team?.leaderId && team && (
+                        <Tab
+                            eventKey="invitations"
+                            title="Invitations"
+                            className="pt-2"
+                        >
+                            <TeamApplicationList team={team} />
+                        </Tab>
+                    )}
                 </Tabs>
             </Card.Body>
             <SendMessagePopup

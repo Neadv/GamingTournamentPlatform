@@ -7,6 +7,7 @@ using GamingTournamentPlatform.Application.Teams.Queries.Category;
 using GamingTournamentPlatform.Application.Teams.Queries.List;
 using GamingTournamentPlatform.Application.Teams.Queries.Read;
 using GamingTournamentPlatform.Application.Teams.Queries.ReadApplication;
+using GamingTournamentPlatform.Application.Teams.Queries.TournamentApplication;
 
 using MediatR;
 
@@ -86,6 +87,13 @@ namespace GamingTournamentPlatform.Web.Controllers
         {
             var result = await Mediator.Send(new AcceptApplicationCommand { TeamId = id, ApplicationId = applicationId });
             return Ok();
+        }
+
+        [HttpGet("{id}/tournament/application")]
+        public async Task<ActionResult> GetTournamentInventation([FromRoute] int id)
+        {
+            var result = await Mediator.Send(new TournamentApplicationQuery { TeamId = id} );
+            return Ok(result);
         }
     }
 }

@@ -1,5 +1,6 @@
 import { Team } from "models/Team";
 import { TeamUserApplication } from "models/TeamUserApplication";
+import { TournamentApplication } from "models/tournaments/TournamentApplication";
 import api from ".";
 
 function loadTeams(): Promise<Team[]> {
@@ -39,6 +40,12 @@ function makeApplication(
     return api.post("team/invite", application);
 }
 
+function getTournamentApplication(
+    teamId: number
+): Promise<TournamentApplication[]> {
+    return api.get(`team/${teamId}/tournament/application`).then((r) => r.data);
+}
+
 export default {
     loadTeams,
     loadTeamById,
@@ -48,4 +55,5 @@ export default {
     makeApplication,
     getApplications,
     acceptApplication,
+    getTournamentApplication,
 };

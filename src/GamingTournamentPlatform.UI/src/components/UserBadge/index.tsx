@@ -38,6 +38,12 @@ const UserBadge: FC = () => {
                     <Dropdown.Item as={Link} to={Routes.UserTeamApplications}>
                         Team Application
                     </Dropdown.Item>
+                    <Dropdown.Item
+                        as={Link}
+                        to={Routes.UserTournamentsApplications}
+                    >
+                        Application
+                    </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>

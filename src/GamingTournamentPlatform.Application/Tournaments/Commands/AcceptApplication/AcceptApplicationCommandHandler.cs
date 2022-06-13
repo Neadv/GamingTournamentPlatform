@@ -29,13 +29,6 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.AcceptApplic
             if (tournament == null)
                 throw new NotFoundException();
 
-            if (tournament.OrganizerId != _currentUserService.UserId)
-            {
-                throw new ValidationException(new Dictionary<string, string[]>
-                {
-                    ["Organize"] = new string[] { "Only organizer can accept applications" }
-                });
-            }
 
             if (DateTime.Now > tournament.RegistrationInfo?.RegistrationDeadline)
             {
@@ -54,9 +47,19 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.AcceptApplic
                 });
             }
 
+
             var application = tournament.RegistrationInfo?.TournamentApplications.FirstOrDefault(a => a.Id == request.ApplicationId);
             if (application == null)
                 throw new NotFoundException();
+
+            if (!application.Inventation && tournament.OrganizerId != _currentUserService.UserId)
+            {
+                throw new ValidationException(new Dictionary<string, string[]>
+                {
+                    ["Organize"] = new string[] { "Only organizer can accept applications" }
+                });
+            }
+            // TODO: Add check for team and user self
 
             tournament.RegistrationInfo?.TournamentApplications.Remove(application);
 

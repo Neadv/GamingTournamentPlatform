@@ -14,6 +14,7 @@ import UserInfo from "pages/User/Info";
 import UserTeamApplications from "pages/User/TeamApplications";
 import EditTournament from "pages/Tournament/Edit";
 import TournamentInfo from "pages/Tournament/Info";
+import TournamentApplications from "pages/User/TournamentApplications";
 
 export interface Route {
     path: string;
@@ -97,6 +98,11 @@ export const routes: Route[] = [
     {
         path: Routes.UserTeamApplications,
         component: UserTeamApplications,
+        private: true,
+    },
+    {
+        path: Routes.UserTournamentsApplications,
+        component: TournamentApplications,
         private: true,
     },
 ];
