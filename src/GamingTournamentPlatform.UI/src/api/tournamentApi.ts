@@ -3,6 +3,7 @@ import { TournamentApplication } from "models/tournaments/TournamentApplication"
 import { CreateTournamentApplicationDTO } from "models/tournaments/CreateTournamentApplicationDTO";
 import { TournamentDetails } from "models/tournaments/TournamentDetails";
 import api from ".";
+import { UpdateRoundDTO } from "models/tournaments/UpdateRoundDTO";
 
 function createTournament(tournament: Tournament): Promise<number> {
     return api.post("tournament", tournament).then((r) => r.data);
@@ -61,6 +62,17 @@ function acceptApplication(
     return api.post(`tournament/${tournamentId}/application/${applicationId}`);
 }
 
+function updateRound(round: UpdateRoundDTO): Promise<void> {
+    return api.put(
+        `tournament/${round.tournamentId}/round/${round.roundId}`,
+        round
+    );
+}
+
+function startTournament(tournamentId: number): Promise<void> {
+    return api.post(`tournament/${tournamentId}/start`);
+}
+
 export default {
     createTournament,
     updateTournament,
@@ -72,4 +84,6 @@ export default {
     getApplications,
     makeApplication,
     acceptApplication,
+    updateRound,
+    startTournament,
 };

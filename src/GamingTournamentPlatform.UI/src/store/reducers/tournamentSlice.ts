@@ -9,6 +9,7 @@ import {
     TournamentState as State,
 } from "models/tournaments/TournamentDetails";
 import errorService from "services/errorService";
+import { UpdateRoundDTO } from "models/tournaments/UpdateRoundDTO";
 
 interface TournamentState {
     tournaments: Tournament[];
@@ -139,6 +140,20 @@ const finishRegistration = createAsyncThunk(
     }
 );
 
+const startTournament = createAsyncThunk(
+    "tournament/startTournament",
+    async (tournamentId: number, thunkApi) => {
+        try {
+            await tournamentApi.startTournament(tournamentId);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
 const loadTournamentApplicationsById = createAsyncThunk(
     "tournament/loadTournamentApplicationsById",
     async (tournamentId: number, thunkApi) => {
@@ -179,6 +194,20 @@ const acceptApplication = createAsyncThunk(
                 payload.applicationId
             );
             return payload.applicationId;
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const updateRound = createAsyncThunk(
+    "tournament/updateRound",
+    async (payload: UpdateRoundDTO, thunkApi) => {
+        try {
+            await tournamentApi.updateRound(payload);
         } catch (e) {
             const error = e as AxiosError;
             return thunkApi.rejectWithValue(
@@ -294,6 +323,11 @@ const tournamentSlice = createSlice({
                 state.tournamentDetails.state = State.NotStarted;
             }
         },
+        [startTournament.fulfilled.type]: (state) => {
+            if (state.tournamentDetails) {
+                state.tournamentDetails.state = State.InProgress;
+            }
+        },
         [loadTournamentApplicationsById.fulfilled.type]: (
             state,
             action: PayloadAction<TournamentApplication[]>
@@ -324,6 +358,8 @@ export const tournamentActions = {
     loadTournamentApplicationsById,
     makeApplication,
     acceptApplication,
+    updateRound,
+    startTournament,
 };
 
 export default tournamentSlice.reducer;

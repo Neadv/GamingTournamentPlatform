@@ -1,3 +1,4 @@
+import TournamentBeforeStartOptions from "components/TournamentBeforeStartOptions";
 import TournamentProgressInfo from "components/TournamentProgressInfo";
 import TournamentRegistration from "components/TournamentRegistration";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
@@ -24,6 +25,8 @@ const TournamentInfo: FC = () => {
         tournamentDetails?.state === TournamentState.Registration
     ) {
         component = <TournamentRegistration />;
+    } else if (tournamentDetails?.state === TournamentState.NotStarted) {
+        component = <TournamentBeforeStartOptions />;
     } else if (
         tournamentDetails?.state === TournamentState.InProgress ||
         tournamentDetails?.state === TournamentState.Finished

@@ -50,7 +50,8 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRound
 
                 var round = stage.TournamentTeamRounds.First(r => r.Id == request.RoundId);
 
-                _mapper.Map(request, round);
+                if (round.State != Domain.Enums.TournamentRoundState.Finished)
+                    _mapper.Map(request, round);
             }
             else
             {

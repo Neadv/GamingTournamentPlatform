@@ -39,7 +39,7 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.FinishRegist
                 });
             }
 
-            if (tournament.State != Domain.Enums.TournamentState.New || tournament.State != Domain.Enums.TournamentState.Registration)
+            if (tournament.State != Domain.Enums.TournamentState.New && tournament.State != Domain.Enums.TournamentState.Registration)
             {
                 throw new ValidationException(new Dictionary<string, string[]>
                 {
