@@ -7,14 +7,13 @@ import { Routes } from "./Routes";
 import CreateTournament from "pages/Tournament/Create";
 import CreateTeam from "pages/Team/Create";
 import TeamInfo from "pages/Team/Info";
-import TournamentRegistration from "pages/Tournament/Registration";
-import TournamentInfo from "pages/Tournament/Info";
 import CreateCategory from "pages/Category/Create";
 import EditCategory from "pages/Category/Edit";
 import EditTeam from "pages/Team/Edit";
 import UserInfo from "pages/User/Info";
 import UserTeamApplications from "pages/User/TeamApplications";
 import EditTournament from "pages/Tournament/Edit";
+import TournamentInfo from "pages/Tournament/Info";
 
 export interface Route {
     path: string;
@@ -54,14 +53,9 @@ export const routes: Route[] = [
         private: true,
     },
     {
-        path: Routes.TournamentRegistration + ":id",
-        component: TournamentRegistration,
-        private: true,
-    },
-    {
         path: Routes.TournamentInfo + ":id",
         component: TournamentInfo,
-        private: true,
+        private: false,
     },
     {
         path: Routes.TournamentEdit + ":id",

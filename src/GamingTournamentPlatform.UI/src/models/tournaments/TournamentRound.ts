@@ -6,6 +6,7 @@ export enum TournamentRoundState {
 
 export interface TournamentRound {
     id: number;
+    date: string;
     state: TournamentRoundState;
     description: string;
     youtubeUrl?: string;

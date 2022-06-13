@@ -32,7 +32,7 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.Invite
                 if (team == null)
                     throw new NotFoundException();
 
-                application = new TournamentApplication { RegistrationInfo = tournament.RegistrationInfo, Team = team };
+                application = new TournamentApplication { RegistrationInfo = tournament.RegistrationInfo, Team = team, Message = request.Message };
             }
             else
             {
@@ -40,11 +40,12 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.Invite
                 if (user == null)
                     throw new NotFoundException();
 
-                application = new TournamentApplication { RegistrationInfo = tournament.RegistrationInfo, User = user };
+                application = new TournamentApplication { RegistrationInfo = tournament.RegistrationInfo, User = user, Message = request.Message };
             }
 
             if (request.Invitation)
             {
+                application.Inventation = true;
                 if (tournament.OrganizerId != _currentUserService.UserId)
                 {
                     throw new ValidationException(new Dictionary<string, string[]>

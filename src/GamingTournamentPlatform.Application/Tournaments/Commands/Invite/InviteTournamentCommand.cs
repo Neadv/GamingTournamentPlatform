@@ -10,5 +10,6 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.Invite
         public int TournamentId { get; set; }
         public int ParticipantId { get; set; }
         public bool Invitation { get; set; } = false;
+        public string Message { get; set; } = string.Empty;
     }
 }

@@ -10,6 +10,7 @@ using GamingTournamentPlatform.Application.Tournaments.Commands.StartRound;
 using GamingTournamentPlatform.Application.Tournaments.Commands.Update;
 using GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRegistration;
 using GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRound;
+using GamingTournamentPlatform.Application.Tournaments.Queries.Applications;
 using GamingTournamentPlatform.Application.Tournaments.Queries.Details;
 using GamingTournamentPlatform.Application.Tournaments.Queries.Read;
 
@@ -134,6 +135,13 @@ namespace GamingTournamentPlatform.Web.Controllers
         {
             await Mediator.Send(new AcceptApplicationCommand { ApplicationId = applicationId, TournamentId = id});
             return Ok();
+        }
+
+        [HttpGet("{id}/application")]
+        public async Task<ActionResult> GetApplications([FromRoute] int id)
+        {
+            var result = await Mediator.Send(new ApplicationsQuery { TournamentId = id });
+            return Ok(result);
         }
     }
 

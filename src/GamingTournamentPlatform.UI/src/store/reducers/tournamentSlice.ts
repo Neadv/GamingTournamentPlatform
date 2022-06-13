@@ -2,7 +2,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import tournamentApi from "api/tournamentApi";
 import { AxiosError } from "axios";
 import { Tournament } from "models/tournaments/Tournament";
-import { TournamentDetails } from "models/tournaments/TournamentDetails";
+import { TournamentApplication } from "models/tournaments/TournamentApplication";
+import { TournamentApplicationDTO } from "models/tournaments/TournamentApplicationDTO";
+import {
+    TournamentDetails,
+    TournamentState as State,
+} from "models/tournaments/TournamentDetails";
 import errorService from "services/errorService";
 
 interface TournamentState {
@@ -12,6 +17,7 @@ interface TournamentState {
     isLoading: boolean;
     errors: string[];
     isSuccess: boolean;
+    applications: TournamentApplication[];
 }
 
 const initialState: TournamentState = {
@@ -21,6 +27,7 @@ const initialState: TournamentState = {
     isLoading: false,
     errors: [],
     isSuccess: false,
+    applications: [],
 };
 
 const createTournament = createAsyncThunk(
@@ -51,11 +58,127 @@ const updateTournament = createAsyncThunk(
     }
 );
 
+const updateTournamentRegistration = createAsyncThunk(
+    "tournament/updateTournamentRegistration",
+    async (
+        value: {
+            tournamentId: number;
+            countOfParticipants: number;
+            registrationDeadline: string;
+        },
+        thunkApi
+    ) => {
+        try {
+            await tournamentApi.updateRegistrationInfo(
+                value.tournamentId,
+                value.countOfParticipants,
+                value.registrationDeadline
+            );
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
 const loadTournamentById = createAsyncThunk(
     "tournament/loadTournamentById",
     async (tournamentId: number, thunkApi) => {
         try {
             return await tournamentApi.getTournamentById(tournamentId);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const loadTournamentDetailsById = createAsyncThunk(
+    "tournament/loadTournamentDetailsById",
+    async (tournamentId: number, thunkApi) => {
+        try {
+            return await tournamentApi.getTournamentDetailsById(tournamentId);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const startRegistration = createAsyncThunk(
+    "tournament/startRegistration",
+    async (tournamentId: number, thunkApi) => {
+        try {
+            await tournamentApi.startRegistration(tournamentId);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const finishRegistration = createAsyncThunk(
+    "tournament/finishRegistration",
+    async (tournamentId: number, thunkApi) => {
+        try {
+            await tournamentApi.finishRegistration(tournamentId);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const loadTournamentApplicationsById = createAsyncThunk(
+    "tournament/loadTournamentApplicationsById",
+    async (tournamentId: number, thunkApi) => {
+        try {
+            return await tournamentApi.getApplications(tournamentId);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const makeApplication = createAsyncThunk(
+    "tournament/makeApplication",
+    async (application: TournamentApplicationDTO, thunkApi) => {
+        try {
+            await tournamentApi.makeApplication(application);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const acceptApplication = createAsyncThunk(
+    "tournament/acceptApplication",
+    async (
+        payload: { tournamentId: number; applicationId: number },
+        thunkApi
+    ) => {
+        try {
+            await tournamentApi.acceptApplication(
+                payload.tournamentId,
+                payload.applicationId
+            );
+            return payload.applicationId;
         } catch (e) {
             const error = e as AxiosError;
             return thunkApi.rejectWithValue(
@@ -143,6 +266,49 @@ const tournamentSlice = createSlice({
             state.isLoading = false;
             state.errors = action.payload;
         },
+        [loadTournamentDetailsById.pending.type]: (state) => {
+            state.isLoading = true;
+            state.errors = [];
+        },
+        [loadTournamentDetailsById.fulfilled.type]: (
+            state,
+            action: PayloadAction<TournamentDetails>
+        ) => {
+            state.isLoading = false;
+            state.tournamentDetails = action.payload;
+        },
+        [loadTournamentDetailsById.rejected.type]: (
+            state,
+            action: PayloadAction<string[]>
+        ) => {
+            state.isLoading = false;
+            state.errors = action.payload;
+        },
+        [startRegistration.fulfilled.type]: (state) => {
+            if (state.tournamentDetails) {
+                state.tournamentDetails.state = State.Registration;
+            }
+        },
+        [finishRegistration.fulfilled.type]: (state) => {
+            if (state.tournamentDetails) {
+                state.tournamentDetails.state = State.NotStarted;
+            }
+        },
+        [loadTournamentApplicationsById.fulfilled.type]: (
+            state,
+            action: PayloadAction<TournamentApplication[]>
+        ) => {
+            state.applications = action.payload;
+        },
+        [acceptApplication.fulfilled.type]: (
+            state,
+            payload: PayloadAction<number>
+        ) => {
+            state.isLoading = false;
+            state.applications = state.applications.filter(
+                (a) => a.id !== payload.payload
+            );
+        },
     },
 });
 
@@ -151,6 +317,13 @@ export const tournamentActions = {
     createTournament,
     loadTournamentById,
     updateTournament,
+    loadTournamentDetailsById,
+    updateTournamentRegistration,
+    startRegistration,
+    finishRegistration,
+    loadTournamentApplicationsById,
+    makeApplication,
+    acceptApplication,
 };
 
 export default tournamentSlice.reducer;
