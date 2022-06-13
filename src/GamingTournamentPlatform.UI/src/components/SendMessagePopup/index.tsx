@@ -21,7 +21,7 @@ const SendMessagePopup: FC<SendMessagePopupProps> = ({
     const [message, setMessage] = useState("");
 
     return (
-        <Modal show={show} onHide={() => cancel()}>
+        <Modal show={show} onHide={() => cancel()} centered>
             <Modal.Header closeButton>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>

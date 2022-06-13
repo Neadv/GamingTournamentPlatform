@@ -75,9 +75,9 @@ namespace GamingTournamentPlatform.Web.Controllers
         }
 
         [HttpGet("{id}/application")]
-        public async Task<ActionResult> GetApplication([FromRoute] int id, [FromQuery] bool invitation = false)
+        public async Task<ActionResult> GetApplication([FromRoute] int id)
         {
-            var result = await Mediator.Send(new ReadApplicationQuery { TeamId = id, Invitation = invitation });
+            var result = await Mediator.Send(new ReadApplicationQuery { TeamId = id });
             return Ok(result);
         }
 

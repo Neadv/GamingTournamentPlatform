@@ -35,7 +35,7 @@ const loadTeamApplication = createAsyncThunk(
     "team/loadTeamApplication",
     async (teamId: number, thunkApi) => {
         try {
-            const application = await teamApi.getApplications(teamId, false);
+            const application = await teamApi.getApplications(teamId);
             return application;
         } catch (e) {
             const error = e as AxiosError;

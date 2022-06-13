@@ -36,7 +36,7 @@ namespace GamingTournamentPlatform.Application.Teams.Queries.ReadApplication
                 });
             }
 
-            return _mapper.Map<IEnumerable<ReadApplicationDTO>>(team.Applications.Where(a => a.Inventation == request.Invitation));
+            return _mapper.Map<IEnumerable<ReadApplicationDTO>>(team.Applications);
         }
     }
 }

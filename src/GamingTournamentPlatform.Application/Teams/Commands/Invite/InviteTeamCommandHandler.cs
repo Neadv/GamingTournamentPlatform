@@ -29,7 +29,7 @@ namespace GamingTournamentPlatform.Application.Teams.Commands.Invite
 
             if (request.Invitation)
             {
-                var currentUser = _userService.GetCurrentUserAsync();
+                var currentUser = await _userService.GetCurrentUserAsync();
                 if (team.LeaderId != currentUser.Id)
                 {
                     throw new ValidationException(new Dictionary<string, string[]>

@@ -22,13 +22,8 @@ function updateTeam(team: Team): Promise<void> {
     return api.put("team/" + team.id, team);
 }
 
-function getApplications(
-    teamId: number,
-    invitation: boolean
-): Promise<TeamUserApplication[]> {
-    return api
-        .get(`team/${teamId}/application`, { params: { invitation } })
-        .then((res) => res.data);
+function getApplications(teamId: number): Promise<TeamUserApplication[]> {
+    return api.get(`team/${teamId}/application`).then((res) => res.data);
 }
 
 function acceptApplication(

@@ -7,7 +7,7 @@ namespace GamingTournamentPlatform.Application.Teams.Queries.ReadApplication
     {
         public int Id { get; set; }
         public string Message { get; set; } = string.Empty;
-        public bool Inventation { get; set; }
+        public bool Invitation { get; set; }
 
         public int UserId { get; set; }
         public ReadUserDTO? User { get; set; }

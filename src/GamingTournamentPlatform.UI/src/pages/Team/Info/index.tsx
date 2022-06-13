@@ -13,7 +13,7 @@ const TeamInfo: FC = () => {
     const { team } = useAppSelector((s) => s.team);
     const dispatch = useAppDispatch();
 
-    const { user } = useAppSelector((s) => s.account);
+    const { user, isAuthorized } = useAppSelector((s) => s.account);
 
     const [showSendPopup, setShowSendPopup] = useState(false);
 
@@ -39,23 +39,25 @@ const TeamInfo: FC = () => {
         <Card>
             <Card.Body>
                 <Card.Title className="text-center">{team?.name}</Card.Title>
-                <div className="float-end">
-                    {user?.id === team?.leader?.id ? (
-                        <>
-                            <Link
-                                to={Routes.EditTeam + team?.id}
-                                className="btn btn-secondary me-2"
-                            >
-                                Edit
-                            </Link>
-                            <TeamUserApplicationModal />
-                        </>
-                    ) : (
-                        <Button onClick={() => setShowSendPopup(true)}>
-                            Send application to join
-                        </Button>
-                    )}
-                </div>
+                {isAuthorized && (
+                    <div className="float-end">
+                        {user?.id === team?.leader?.id ? (
+                            <>
+                                <Link
+                                    to={Routes.EditTeam + team?.id}
+                                    className="btn btn-secondary me-2"
+                                >
+                                    Edit
+                                </Link>
+                                <TeamUserApplicationModal />
+                            </>
+                        ) : (
+                            <Button onClick={() => setShowSendPopup(true)}>
+                                Send application to join
+                            </Button>
+                        )}
+                    </div>
+                )}
                 <Tabs defaultActiveKey="info" className="mt-3">
                     <Tab eventKey="info" title="Info">
                         <div className="m-2">

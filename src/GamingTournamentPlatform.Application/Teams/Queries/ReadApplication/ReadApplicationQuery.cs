@@ -8,6 +8,5 @@ namespace GamingTournamentPlatform.Application.Teams.Queries.ReadApplication
     public class ReadApplicationQuery : IRequest<IEnumerable<ReadApplicationDTO>>
     {
         public int TeamId { get; set; }
-        public bool Invitation { get; set; }
     }
 }

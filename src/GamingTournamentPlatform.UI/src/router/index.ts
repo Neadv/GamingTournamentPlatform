@@ -73,7 +73,7 @@ export const routes: Route[] = [
     {
         path: Routes.TeamInfo + ":id",
         component: TeamInfo,
-        private: true,
+        private: false,
     },
     {
         path: Routes.CreateCategory,
