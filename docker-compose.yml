@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  backend:
+      build: .
+      ports:
+        - '5000:5000'
+      environment:
+        ConnectionStrings:GamingTournamentPlatformConnectionString: Host=db;Port=5432;Database=GamingTournamentPlatform;Username=postgres;Password=secret;
+        AuthOptions:Issuer: GamingTournamentPlatform.Server
+        AuthOptions:Audience: GamingTournamentPlatform.Client
+        AuthOptions:Key: GamingTournamentPlatformSecretKey
+        AuthOptions:Lifetime: 300
+        AutoMigration: true
+      restart: always
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - dbData:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+volumes:
+  dbData:

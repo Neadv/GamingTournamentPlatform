@@ -14,8 +14,8 @@ namespace GamingTournamentPlatform.Infrastructure
         {
             var connectionString = configuration.GetConnectionString("GamingTournamentPlatformConnectionString");
 
-            services.AddDbContext<ApplicationIdentityDbContext>(opts => opts.UseSqlServer(connectionString, b => b.MigrationsAssembly(typeof(ApplicationIdentityDbContext).Assembly.FullName)));
-            services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(connectionString, b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+            services.AddDbContext<ApplicationIdentityDbContext>(opts => opts.UseNpgsql(connectionString, b => b.MigrationsAssembly(typeof(ApplicationIdentityDbContext).Assembly.FullName)));
+            services.AddDbContext<ApplicationDbContext>(opts => opts.UseNpgsql(connectionString, b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddScoped<IApplicationDbContext>(s => s.GetRequiredService<ApplicationDbContext>());
 
