@@ -15,4 +15,7 @@ export enum Routes {
     User = "/user/",
     UserTeamApplications = "/user/team-applications",
     UserTournamentsApplications = "/user/tournament-applications",
+    TeamList = "/teams",
+    TournamentList = "/tournaments",
+    CategoryList = "/categories",
 }

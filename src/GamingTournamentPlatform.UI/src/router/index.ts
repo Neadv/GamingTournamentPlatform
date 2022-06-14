@@ -15,6 +15,10 @@ import UserTeamApplications from "pages/User/TeamApplications";
 import EditTournament from "pages/Tournament/Edit";
 import TournamentInfo from "pages/Tournament/Info";
 import TournamentApplications from "pages/User/TournamentApplications";
+import EditTournamentRound from "pages/Tournament/Round/Editor";
+import TeamList from "pages/Team/List";
+import CategoryList from "pages/Category/List";
+import TournamentList from "pages/Tournament/List";
 
 export interface Route {
     path: string;
@@ -104,5 +108,25 @@ export const routes: Route[] = [
         path: Routes.UserTournamentsApplications,
         component: TournamentApplications,
         private: true,
+    },
+    {
+        path: "/tournament/:id/round/:roundId",
+        component: EditTournamentRound,
+        private: true,
+    },
+    {
+        path: Routes.TeamList,
+        component: TeamList,
+        private: false,
+    },
+    {
+        path: Routes.CategoryList,
+        component: CategoryList,
+        private: false,
+    },
+    {
+        path: Routes.TournamentList,
+        component: TournamentList,
+        private: false,
     },
 ];

@@ -10,6 +10,7 @@ import {
 } from "models/tournaments/TournamentDetails";
 import errorService from "services/errorService";
 import { UpdateRoundDTO } from "models/tournaments/UpdateRoundDTO";
+import { TournamentRound } from "models/tournaments/TournamentRound";
 
 interface TournamentState {
     tournaments: Tournament[];
@@ -19,6 +20,7 @@ interface TournamentState {
     errors: string[];
     isSuccess: boolean;
     applications: TournamentApplication[];
+    tournamentRound: TournamentRound | null;
 }
 
 const initialState: TournamentState = {
@@ -29,6 +31,7 @@ const initialState: TournamentState = {
     errors: [],
     isSuccess: false,
     applications: [],
+    tournamentRound: null,
 };
 
 const createTournament = createAsyncThunk(
@@ -89,6 +92,20 @@ const loadTournamentById = createAsyncThunk(
     async (tournamentId: number, thunkApi) => {
         try {
             return await tournamentApi.getTournamentById(tournamentId);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const loadTournaments = createAsyncThunk(
+    "tournament/loadTournaments",
+    async (_, thunkApi) => {
+        try {
+            return await tournamentApi.getTournaments();
         } catch (e) {
             const error = e as AxiosError;
             return thunkApi.rejectWithValue(
@@ -208,6 +225,67 @@ const updateRound = createAsyncThunk(
     async (payload: UpdateRoundDTO, thunkApi) => {
         try {
             await tournamentApi.updateRound(payload);
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const loadTournamentRoundById = createAsyncThunk(
+    "tournament/loadTournamentRoundById",
+    async (value: { tournamentId: number; roundId: number }, thunkApi) => {
+        try {
+            return await tournamentApi.getTournamentRound(
+                value.tournamentId,
+                value.roundId
+            );
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const startRound = createAsyncThunk(
+    "tournament/startRound",
+    async (value: { tournamentId: number; roundId: number }, thunkApi) => {
+        try {
+            await tournamentApi.startTournamentRound(
+                value.tournamentId,
+                value.roundId
+            );
+            thunkApi.dispatch(loadTournamentDetailsById(value.tournamentId));
+        } catch (e) {
+            const error = e as AxiosError;
+            return thunkApi.rejectWithValue(
+                errorService.getErrorMessagesFromError(error)
+            );
+        }
+    }
+);
+
+const finishRound = createAsyncThunk(
+    "tournament/finishRound",
+    async (
+        value: {
+            tournamentId: number;
+            roundId: number;
+            firstParticipantWon: boolean;
+        },
+        thunkApi
+    ) => {
+        try {
+            await tournamentApi.finishTournamentRound(
+                value.tournamentId,
+                value.roundId,
+                value.firstParticipantWon
+            );
+            thunkApi.dispatch(loadTournamentDetailsById(value.tournamentId));
         } catch (e) {
             const error = e as AxiosError;
             return thunkApi.rejectWithValue(
@@ -343,6 +421,24 @@ const tournamentSlice = createSlice({
                 (a) => a.id !== payload.payload
             );
         },
+        [loadTournamentRoundById.fulfilled.type]: (
+            state,
+            payload: PayloadAction<TournamentRound>
+        ) => {
+            state.isLoading = false;
+            state.tournamentRound = payload.payload;
+        },
+        [updateRound.fulfilled.type]: (state) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+        },
+        [loadTournaments.fulfilled.type]: (
+            state,
+            action: PayloadAction<Tournament[]>
+        ) => {
+            state.isLoading = false;
+            state.tournaments = action.payload;
+        },
     },
 });
 
@@ -360,6 +456,10 @@ export const tournamentActions = {
     acceptApplication,
     updateRound,
     startTournament,
+    loadTournamentRoundById,
+    startRound,
+    finishRound,
+    loadTournaments,
 };
 
 export default tournamentSlice.reducer;

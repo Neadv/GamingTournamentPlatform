@@ -16,6 +16,7 @@ const TournamentInfo: FC = () => {
     const { id } = useParams();
 
     useEffect(() => {
+        dispatch(tournamentActions.clear());
         dispatch(tournamentActions.loadTournamentDetailsById(Number(id)));
     }, [id]);
 

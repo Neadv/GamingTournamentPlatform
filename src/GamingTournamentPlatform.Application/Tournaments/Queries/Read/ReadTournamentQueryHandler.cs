@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 
 using GamingTournamentPlatform.Application.Common.Interfaces;
+using GamingTournamentPlatform.Application.Tournaments.Queries.DTOs;
 
 using MediatR;
 

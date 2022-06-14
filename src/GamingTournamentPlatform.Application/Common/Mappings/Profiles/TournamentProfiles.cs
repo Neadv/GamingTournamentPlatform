@@ -5,7 +5,7 @@ using GamingTournamentPlatform.Application.Tournaments.Commands.Update;
 using GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRound;
 using GamingTournamentPlatform.Application.Tournaments.Queries.Applications;
 using GamingTournamentPlatform.Application.Tournaments.Queries.DTOs;
-using GamingTournamentPlatform.Application.Tournaments.Queries.Read;
+using GamingTournamentPlatform.Application.Tournaments.Queries.ReadRound;
 using GamingTournamentPlatform.Domain.Entities;
 
 namespace GamingTournamentPlatform.Application.Common.Mappings.Profiles
@@ -24,6 +24,9 @@ namespace GamingTournamentPlatform.Application.Common.Mappings.Profiles
             CreateMap<TournamentStage, TournamentStageDTO>();
             CreateMap<TournamentTeamRound, TournamentTeamRoundDTO>();
             CreateMap<TournamentUserRound, TournamentUserRoundDTO>();
+
+            CreateMap<TournamentUserRound, ReadTournamentRoundDTO>();
+            CreateMap<TournamentTeamRound, ReadTournamentRoundDTO>();
 
             CreateMap<Tournament, ReadTournamentDTO>().ForMember(dest => dest.RegistrationDeadline, opts => opts.MapFrom(src => src.RegistrationInfo!.RegistrationDeadline));
             CreateMap<TournamentApplication, TournamentApplicationDTO>();

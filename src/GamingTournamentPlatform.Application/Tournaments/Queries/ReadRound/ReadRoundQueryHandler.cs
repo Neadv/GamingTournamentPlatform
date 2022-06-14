@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 
 using GamingTournamentPlatform.Application.Common.Exceptions;
 using GamingTournamentPlatform.Application.Common.Interfaces;
@@ -7,22 +8,22 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRound
+namespace GamingTournamentPlatform.Application.Tournaments.Queries.ReadRound
 {
-    public class UpdateRoundCommandHandler : IRequestHandler<UpdateRoundCommand, Unit>
+    public class ReadRoundQueryHandler : IRequestHandler<ReadRoundQuery, ReadTournamentRoundDTO>
     {
         private readonly IApplicationDbContext _context;
         private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
 
-        public UpdateRoundCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IMapper mapper)
+        public ReadRoundQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService, IMapper mapper)
         {
             _context = context;
             _currentUserService = currentUserService;
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateRoundCommand request, CancellationToken cancellationToken)
+        public async Task<ReadTournamentRoundDTO> Handle(ReadRoundQuery request, CancellationToken cancellationToken)
         {
             var tournament = await _context.Tournaments.Include(t => t.Category)
                                                        .Include(t => t.Stages)
@@ -42,6 +43,7 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRound
                 });
             }
 
+            ReadTournamentRoundDTO dto;
             if (tournament.IsTeamTournament)
             {
                 var stage = tournament.Stages.FirstOrDefault(s => s.TournamentTeamRounds.FirstOrDefault(r => r.Id == request.RoundId) != null);
@@ -50,13 +52,7 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRound
 
                 var round = stage.TournamentTeamRounds.First(r => r.Id == request.RoundId);
 
-                if (round.State != Domain.Enums.TournamentRoundState.Finished)
-                    _mapper.Map(request, round);
-
-                if (!string.IsNullOrEmpty(round.YoutubeUrl) && round.YoutubeUrl.Contains("v="))
-                {
-                    round.YoutubeUrl = round.YoutubeUrl.Substring(round.YoutubeUrl.IndexOf("v=") + 2);
-                }
+                dto = _mapper.Map<ReadTournamentRoundDTO>(round);
             }
             else
             {
@@ -66,19 +62,10 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRound
 
                 var round = stage.TournamentUserRounds.First(r => r.Id == request.RoundId);
 
-                if (round.State != Domain.Enums.TournamentRoundState.Finished)
-                    _mapper.Map(request, round);
-
-                if (!string.IsNullOrEmpty(round.YoutubeUrl) && round.YoutubeUrl.Contains("v="))
-                {
-                    round.YoutubeUrl = round.YoutubeUrl.Substring(round.YoutubeUrl.IndexOf("v=") + 1);
-                }
+                dto = _mapper.Map<ReadTournamentRoundDTO>(round);
             }
 
-            _context.Tournaments.Update(tournament);
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
+            return dto;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using GamingTournamentPlatform.Application.Tournaments.Queries.Read;
-
-namespace GamingTournamentPlatform.Application.Tournaments.Queries.DTOs
+﻿namespace GamingTournamentPlatform.Application.Tournaments.Queries.DTOs
 {
     public class ReadTournamentApplicationDTO
     {

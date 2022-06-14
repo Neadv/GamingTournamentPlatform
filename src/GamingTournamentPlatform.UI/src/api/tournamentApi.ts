@@ -4,6 +4,7 @@ import { CreateTournamentApplicationDTO } from "models/tournaments/CreateTournam
 import { TournamentDetails } from "models/tournaments/TournamentDetails";
 import api from ".";
 import { UpdateRoundDTO } from "models/tournaments/UpdateRoundDTO";
+import { TournamentRound } from "models/tournaments/TournamentRound";
 
 function createTournament(tournament: Tournament): Promise<number> {
     return api.post("tournament", tournament).then((r) => r.data);
@@ -15,6 +16,10 @@ function updateTournament(tournament: Tournament): Promise<void> {
 
 function getTournamentById(id: number): Promise<Tournament> {
     return api.get("tournament/" + id).then((r) => r.data);
+}
+
+function getTournaments(): Promise<Tournament[]> {
+    return api.get("tournament").then((r) => r.data);
 }
 
 function getTournamentDetailsById(id: number): Promise<TournamentDetails> {
@@ -73,6 +78,34 @@ function startTournament(tournamentId: number): Promise<void> {
     return api.post(`tournament/${tournamentId}/start`);
 }
 
+function getTournamentRound(
+    tournamentId: number,
+    roundId: number
+): Promise<TournamentRound> {
+    return api
+        .get(`tournament/${tournamentId}/round/${roundId}`)
+        .then((r) => r.data);
+}
+
+function startTournamentRound(
+    tournamentId: number,
+    roundId: number
+): Promise<void> {
+    return api.post(`tournament/${tournamentId}/round/${roundId}/start`);
+}
+
+function finishTournamentRound(
+    tournamentId: number,
+    roundId: number,
+    firstParticipantWon: boolean
+): Promise<void> {
+    return api.post(`tournament/${tournamentId}/round/${roundId}/finish`, {
+        tournamentId,
+        roundId,
+        firstParticipantWon,
+    });
+}
+
 export default {
     createTournament,
     updateTournament,
@@ -86,4 +119,8 @@ export default {
     acceptApplication,
     updateRound,
     startTournament,
+    getTournamentRound,
+    startTournamentRound,
+    finishTournamentRound,
+    getTournaments,
 };

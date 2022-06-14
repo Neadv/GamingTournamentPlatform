@@ -2,7 +2,7 @@
 using GamingTournamentPlatform.Application.Users.Queries;
 using GamingTournamentPlatform.Domain.Enums;
 
-namespace GamingTournamentPlatform.Application.Tournaments.Queries.Read
+namespace GamingTournamentPlatform.Application.Tournaments.Queries.DTOs
 {
     public class ReadTournamentDTO
     {

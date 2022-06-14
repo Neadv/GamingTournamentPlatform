@@ -5,8 +5,12 @@ import { NavLink } from "react-router-dom";
 import logo from "assets/images/Logo.png";
 import "./AppHeader.scss";
 import UserBadge from "components/UserBadge";
+import { useAppSelector } from "hooks/redux";
 
 const AppHeader: FC = () => {
+    const { user } = useAppSelector((s) => s.account);
+    const isAdmin = user?.roles.includes("Admin") === true;
+
     return (
         <header id="header">
             <Navbar bg="dark" variant="dark">
@@ -27,20 +31,57 @@ const AppHeader: FC = () => {
                                 id="navbarScrollingDropdown"
                                 menuVariant="dark"
                             >
-                                <NavDropdown.Item as={NavLink} to="/test3">
-                                    Action
+                                <NavDropdown.Item
+                                    as={NavLink}
+                                    to={Routes.CreateTournament}
+                                >
+                                    Create new Tournament
                                 </NavDropdown.Item>
-                                <NavDropdown.Item as={NavLink} to="/test4">
-                                    Another action
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item as={NavLink} to="/test5">
-                                    Something else here
+                                <NavDropdown.Item
+                                    as={NavLink}
+                                    to={Routes.TournamentList}
+                                >
+                                    Tournaments
                                 </NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link as={NavLink} to="/error/404">
-                                Teams
-                            </Nav.Link>
+                            <NavDropdown
+                                title="Teams"
+                                id="navbarScrollingDropdown"
+                                menuVariant="dark"
+                            >
+                                <NavDropdown.Item
+                                    as={NavLink}
+                                    to={Routes.CreateTeam}
+                                >
+                                    Create new Team
+                                </NavDropdown.Item>
+                                <NavDropdown.Item
+                                    as={NavLink}
+                                    to={Routes.TeamList}
+                                >
+                                    Teams
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                            <NavDropdown
+                                title="Categories"
+                                id="navbarScrollingDropdown"
+                                menuVariant="dark"
+                            >
+                                {isAdmin && (
+                                    <NavDropdown.Item
+                                        as={NavLink}
+                                        to={Routes.CreateCategory}
+                                    >
+                                        Create new Category
+                                    </NavDropdown.Item>
+                                )}
+                                <NavDropdown.Item
+                                    as={NavLink}
+                                    to={Routes.CategoryList}
+                                >
+                                    Categories
+                                </NavDropdown.Item>
+                            </NavDropdown>
                         </Nav>
                         <UserBadge />
                     </Navbar.Collapse>

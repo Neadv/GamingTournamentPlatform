@@ -12,7 +12,9 @@ using GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRegistrati
 using GamingTournamentPlatform.Application.Tournaments.Commands.UpdateRound;
 using GamingTournamentPlatform.Application.Tournaments.Queries.Applications;
 using GamingTournamentPlatform.Application.Tournaments.Queries.Details;
+using GamingTournamentPlatform.Application.Tournaments.Queries.List;
 using GamingTournamentPlatform.Application.Tournaments.Queries.Read;
+using GamingTournamentPlatform.Application.Tournaments.Queries.ReadRound;
 
 using MediatR;
 
@@ -46,6 +48,13 @@ namespace GamingTournamentPlatform.Web.Controllers
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
             var result = await Mediator.Send(new ReadTournamentQuery { Id = id });
+            return result != null ? Ok(result) : Ok();
+        }
+
+        [HttpGet()]
+        public async Task<ActionResult> GetAll()
+        {
+            var result = await Mediator.Send(new ListTournamentQuery());
             return result != null ? Ok(result) : Ok();
         }
 
@@ -102,7 +111,7 @@ namespace GamingTournamentPlatform.Web.Controllers
             await Mediator.Send(new FinishTournamentCommand { Id = id });
             return Ok();
         }
-        
+
         [HttpPost("{id}/round/{roundId}/start")]
         public async Task<ActionResult> SetStartRound([FromRoute] int id, [FromRoute] int roundId)
         {
@@ -130,10 +139,17 @@ namespace GamingTournamentPlatform.Web.Controllers
             return Ok();
         }
 
+        [HttpGet("{id}/round/{roundId}")]
+        public async Task<ActionResult> GetRound([FromRoute] int id, [FromRoute] int roundId)
+        {
+            var reuslt = await Mediator.Send(new ReadRoundQuery { TournamentId = id, RoundId = roundId });
+            return Ok(reuslt);
+        }
+
         [HttpPost("{id}/application/{applicationId}")]
         public async Task<ActionResult> AcceptApplication([FromRoute] int id, [FromRoute] int applicationId)
         {
-            await Mediator.Send(new AcceptApplicationCommand { ApplicationId = applicationId, TournamentId = id});
+            await Mediator.Send(new AcceptApplicationCommand { ApplicationId = applicationId, TournamentId = id });
             return Ok();
         }
 
