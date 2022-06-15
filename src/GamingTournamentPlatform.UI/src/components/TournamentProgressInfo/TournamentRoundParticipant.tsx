@@ -4,7 +4,7 @@ import { User } from "models/User";
 import React, { FC } from "react";
 
 interface TournamentRoundParticipantProps {
-    participant: User | Team;
+    participant: User | Team | null;
     isTeamRound: boolean;
     won: boolean;
 }
@@ -14,8 +14,8 @@ const TournamentRoundParticipant: FC<TournamentRoundParticipantProps> = ({
     isTeamRound,
     won,
 }) => {
-    const getUser = () => participant as User;
-    const getTeam = () => participant as Team;
+    const getUser = () => participant as User | null;
+    const getTeam = () => participant as Team | null;
 
     return (
         <div className={`participant ${won && "active"}`}>
@@ -26,7 +26,7 @@ const TournamentRoundParticipant: FC<TournamentRoundParticipantProps> = ({
                         color={won ? "#fff" : "#0b5ed7"}
                     />
                     <span className="d-inline-block ms-2">
-                        {getTeam().name}
+                        {getTeam()?.name ?? "?"}
                     </span>
                 </>
             ) : (
@@ -36,7 +36,7 @@ const TournamentRoundParticipant: FC<TournamentRoundParticipantProps> = ({
                         color={won ? "#fff" : "#0b5ed7"}
                     />
                     <span className="d-inline-block ms-2">
-                        {getUser().userName}
+                        {getUser()?.userName ?? "?"}
                     </span>
                 </>
             )}
