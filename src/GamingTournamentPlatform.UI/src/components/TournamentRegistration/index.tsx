@@ -95,6 +95,9 @@ const TournamentRegistration: FC = () => {
                         {tournamentDetails.state ===
                             TournamentState.Registration && (
                             <div className="d-flex justify-content-end">
+                                <Button variant="secondary me-2">
+                                    Assign moderator
+                                </Button>
                                 <TournamentApplicationModal
                                     details={tournamentDetails}
                                 />

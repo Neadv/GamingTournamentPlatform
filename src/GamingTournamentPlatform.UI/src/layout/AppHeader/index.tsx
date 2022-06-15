@@ -8,7 +8,7 @@ import UserBadge from "components/UserBadge";
 import { useAppSelector } from "hooks/redux";
 
 const AppHeader: FC = () => {
-    const { user } = useAppSelector((s) => s.account);
+    const { user, isAuthorized } = useAppSelector((s) => s.account);
     const isAdmin = user?.roles.includes("Admin") === true;
 
     return (
@@ -31,12 +31,14 @@ const AppHeader: FC = () => {
                                 id="navbarScrollingDropdown"
                                 menuVariant="dark"
                             >
-                                <NavDropdown.Item
-                                    as={NavLink}
-                                    to={Routes.CreateTournament}
-                                >
-                                    Create new Tournament
-                                </NavDropdown.Item>
+                                {isAuthorized && (
+                                    <NavDropdown.Item
+                                        as={NavLink}
+                                        to={Routes.CreateTournament}
+                                    >
+                                        Create new Tournament
+                                    </NavDropdown.Item>
+                                )}
                                 <NavDropdown.Item
                                     as={NavLink}
                                     to={Routes.TournamentList}
@@ -49,12 +51,14 @@ const AppHeader: FC = () => {
                                 id="navbarScrollingDropdown"
                                 menuVariant="dark"
                             >
-                                <NavDropdown.Item
-                                    as={NavLink}
-                                    to={Routes.CreateTeam}
-                                >
-                                    Create new Team
-                                </NavDropdown.Item>
+                                {isAuthorized && (
+                                    <NavDropdown.Item
+                                        as={NavLink}
+                                        to={Routes.CreateTeam}
+                                    >
+                                        Create new Team
+                                    </NavDropdown.Item>
+                                )}
                                 <NavDropdown.Item
                                     as={NavLink}
                                     to={Routes.TeamList}
@@ -82,6 +86,20 @@ const AppHeader: FC = () => {
                                     Categories
                                 </NavDropdown.Item>
                             </NavDropdown>
+                            {isAdmin && (
+                                <NavDropdown
+                                    title="Users"
+                                    id="navbarScrollingDropdown"
+                                    menuVariant="dark"
+                                >
+                                    <NavDropdown.Item
+                                        as={NavLink}
+                                        to={Routes.CreateCategory}
+                                    >
+                                        Users
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            )}
                         </Nav>
                         <UserBadge />
                     </Navbar.Collapse>
