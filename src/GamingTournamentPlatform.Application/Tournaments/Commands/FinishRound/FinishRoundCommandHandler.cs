@@ -55,11 +55,11 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.FinishRound
                 {
                     if (teamRound.NextRound.FirstParticipantId == null)
                     {
-                        teamRound.NextRound.FirstParticipant = request.FirstParticipantWon ? teamRound.FirstParticipant : teamRound.SecondParticipant;
+                        teamRound.NextRound.FirstParticipantId = request.FirstParticipantWon ? teamRound.FirstParticipantId : teamRound.SecondParticipantId;
                     }
                     else if (teamRound.NextRound.SecondParticipantId == null)
                     {
-                        teamRound.NextRound.SecondParticipant = request.FirstParticipantWon ? teamRound.FirstParticipant : teamRound.SecondParticipant;
+                        teamRound.NextRound.SecondParticipantId = request.FirstParticipantWon ? teamRound.FirstParticipantId : teamRound.SecondParticipantId;
                     }
                 }
 
@@ -77,11 +77,11 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.FinishRound
                 {
                     if (userRound.NextRound.FirstParticipantId == null)
                     {
-                        userRound.NextRound.FirstParticipant = request.FirstParticipantWon ? userRound.FirstParticipant : userRound.SecondParticipant;
+                        userRound.NextRound.FirstParticipantId = request.FirstParticipantWon ? userRound.FirstParticipantId : userRound.SecondParticipantId;
                     }
                     else if (userRound.NextRound.SecondParticipantId == null)
                     {
-                        userRound.NextRound.SecondParticipant = request.FirstParticipantWon ? userRound.FirstParticipant : userRound.SecondParticipant;
+                        userRound.NextRound.SecondParticipantId = request.FirstParticipantWon ? userRound.FirstParticipantId : userRound.SecondParticipantId;
                     }
                 }
 
@@ -93,11 +93,14 @@ namespace GamingTournamentPlatform.Application.Tournaments.Commands.FinishRound
                 round.State = Domain.Enums.TournamentRoundState.Finished;
                 round.FirstParticipantWon = request.FirstParticipantWon;
 
-                if (tournament.IsTeamTournament
-                    && (stage.TournamentTeamRounds.All(r => r.State == Domain.Enums.TournamentRoundState.Finished)
-                    || stage.TournamentUserRounds.All(r => r.State == Domain.Enums.TournamentRoundState.Finished)))
+                var finishState = tournament.IsTeamTournament ? stage.TournamentTeamRounds.All(r => r.State == Domain.Enums.TournamentRoundState.Finished) : stage.TournamentUserRounds.All(r => r.State == Domain.Enums.TournamentRoundState.Finished);
+                if (finishState)
                 {
                     stage.State = Domain.Enums.TournamentStageState.Finished;
+                }
+                if (tournament.Stages.All(s => s.State == Domain.Enums.TournamentStageState.Finished))
+                {
+                    tournament.State = Domain.Enums.TournamentState.Finished;
                 }
 
                 _context.Tournaments.Update(tournament);

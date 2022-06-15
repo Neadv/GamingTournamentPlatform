@@ -30,15 +30,15 @@ const TournamentBeforeStartOptions: FC = () => {
             : stage.tournamentUserRounds;
 
     if (!roundDate) {
+        const newRoundDate: RoundDateType = {};
         tournamentDetails.stages.forEach((s) => {
-            const newRoundDate: RoundDateType = {};
             getRounds(s).forEach((r) => {
                 if (!newRoundDate[r.id]) {
                     newRoundDate[r.id] = r.date;
                 }
             });
-            setRoundDate(newRoundDate);
         });
+        setRoundDate(newRoundDate);
     }
 
     const getRoundDateValue = (id: number) => {
@@ -74,10 +74,12 @@ const TournamentBeforeStartOptions: FC = () => {
         }
     };
 
+    console.log(tournamentDetails);
+
     return (
         <div>
             <h4 className="text-center">Setup round dates</h4>
-            {tournamentDetails.stages.reverse().map((s) => (
+            {tournamentDetails.stages.map((s) => (
                 <div key={s.id}>
                     <h4>{s.name}</h4>
                     {getRounds(s).map((r, index) => (
